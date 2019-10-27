@@ -1,10 +1,11 @@
-import { Dispatch, useCallback } from 'react';
-import { KeyCode } from '../calculation/Keyboard';
-import { Action, ActionType } from '../redux/actions';
+import { useCallback } from 'react';
+import { actions } from '../redux/actions';
+import { Dispatch } from '../types/ReduxType';
+import { KeyCode } from '../utils/Keyboard';
 import { useGlobalKeyboard } from './useGlobalKeyboard';
 
 interface Options {
-  dispatch: Dispatch<Action>;
+  dispatch: Dispatch;
   onAdd: () => void;
   onSave: () => void;
 }
@@ -15,11 +16,11 @@ export function useGlobalKeyboardShortcut({ dispatch, onAdd, onSave }: Options) 
       if (event.code === KeyCode.KEY_A) {
         onAdd();
       } else if (event.code === KeyCode.BACKSPACE) {
-        dispatch({ type: ActionType.GRAPH_REMOVE });
+        dispatch(actions.NOTE_ADD());
       } else if (event.code === KeyCode.ESCAPE) {
-        dispatch({ type: ActionType.GRAPH_DESELECT });
+        // dispatch(actions.NOTE_DESELECT());
       } else if ((event.ctrlKey || event.metaKey) && event.code === KeyCode.KEY_S) {
-        onSave();
+        // dispatch(actions.NOTE_SAVE());
       } else {
         return;
       }

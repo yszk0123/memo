@@ -15,7 +15,7 @@ export type ReducerWithInitialState<State, TAction extends Action<any, any>> = (
 ) => State;
 
 type ReducerHandler<TState, TType extends string, TAction extends { type: TType }> = {
-  [Type in TType]: TAction extends { type: Type } ? Reducer<TState, TAction> : never;
+  [Type in TType]?: TAction extends { type: Type } ? Reducer<TState, TAction> : never;
 };
 export function createReducer<TState, TType extends string, TAction extends { type: TType }>(
   initialState: TState,
@@ -23,8 +23,8 @@ export function createReducer<TState, TType extends string, TAction extends { ty
   defaultReducer: ReducerWithInitialState<TState, TAction> = (state = initialState) => state,
 ): ReducerWithInitialState<TState, TAction> {
   const reducer: ReducerWithInitialState<TState, TAction> = (state = initialState, action) => {
-    const h = handler[action.type] || defaultReducer;
-    return h(state, action);
+    const h = handler[action.type];
+    return h !== undefined ? h(state, action) : defaultReducer(state, action);
   };
   return reducer;
 }
