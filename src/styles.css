@@ -43,13 +43,21 @@
   --color-secondary-text: var(--palette-white);
 }
 
-.App {
+.Layout {
   position: absolute;
   display: flex;
   width: 100vw;
   height: 100vh;
   flex-direction: column;
   font-size: var(--font-md);
+}
+
+.Layout__header {
+  background: var(--color-primary);
+  padding: var(--space);
+  color: var(--color-primary-text);
+  box-shadow: 0 1px 1px 0 var(--color-shadow);
+  width: 100%;
 }
 
 .Button {

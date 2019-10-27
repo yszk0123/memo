@@ -6,6 +6,7 @@ import { actions } from '../../redux/actions';
 import { selectors } from '../../redux/selectors';
 import { noop } from '../../utils/noop';
 import { Button } from '../atoms/Button';
+import { Layout } from '../organisms/Layout';
 
 interface Props {}
 
@@ -13,11 +14,6 @@ export const AppPage: React.FunctionComponent<Props> = () => {
   const dispatch = useDispatch();
 
   const user = useTypedSelector(selectors.user);
-
-  const handleDeselect = useCallback(() => {
-    // FIXME
-    dispatch(actions.NOTE_ADD());
-  }, [dispatch]);
 
   const handleLogin = useCallback(() => {
     dispatch(actions.USER_LOGIN_REQUEST());
@@ -29,10 +25,17 @@ export const AppPage: React.FunctionComponent<Props> = () => {
     onSave: noop,
   });
 
+  if (user === null) {
+    return (
+      <Layout>
+        <Button onClick={handleLogin}>Login</Button>
+      </Layout>
+    );
+  }
+
   return (
-    <div className="App" onClick={handleDeselect}>
-      <p>{user !== null ? `Hello, ${user.id}!` : 'Hello'}</p>
-      {user === null && <Button onClick={handleLogin}>Login</Button>}
-    </div>
+    <Layout>
+      <p>{user.displayName ? `Hello, ${user.id}!` : 'Hello'}</p>
+    </Layout>
   );
 };
