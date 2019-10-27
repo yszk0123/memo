@@ -78,7 +78,7 @@ function* noteAddSaga({
 
   const db = firebase.firestore();
   const noteRef = db.collection('notes').doc();
-  const note = createNote(noteRef, user.id, text);
+  const note = yield call(createNote, noteRef, user.id, text);
   yield call([noteRef, noteRef.set], note);
   yield put(actions.NOTE_ADD_SUCCESS(note));
 }

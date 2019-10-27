@@ -9,7 +9,7 @@ import { noop } from '../../utils/noop';
 import { PrimaryButton, SecondaryButton } from '../atoms/Button';
 import { List } from '../atoms/List';
 import { ListItem } from '../atoms/ListItem';
-import { TextInput } from '../atoms/TextInput';
+import { TextArea } from '../atoms/TextArea';
 import { AppLayout } from '../organisms/AppLayout';
 
 interface Props {}
@@ -64,7 +64,7 @@ export const HomePage: React.FunctionComponent<Props> = () => {
 const NoteAdd: React.FunctionComponent<{ onSubmit: (text: string) => void }> = ({ onSubmit }) => {
   const [text, setText] = useState('');
 
-  const handleChange = useCallback((event: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((event: React.FormEvent<HTMLTextAreaElement>) => {
     const newText = event.currentTarget.value;
     setText(newText);
   }, []);
@@ -78,7 +78,7 @@ const NoteAdd: React.FunctionComponent<{ onSubmit: (text: string) => void }> = (
 
   return (
     <div>
-      <TextInput value={text} onChange={handleChange} />
+      <TextArea value={text} onChange={handleChange} />
       <PrimaryButton className="HomePage__note-add" disabled={disabled} onClick={handleSubmit}>
         Add
       </PrimaryButton>
@@ -111,7 +111,7 @@ const NoteView: React.FunctionComponent<{ note: Note; onRemove: (noteId: string)
 
   return (
     <ListItem className="NoteView">
-      <p className="NoteView-text">{note.text}</p>
+      <pre className="NoteView-text">{note.text}</pre>
       <p className="NoteView-created-at">{createdAt}</p>
       <SecondaryButton className="NoteView-remove" onClick={handleRemove}>
         Remove

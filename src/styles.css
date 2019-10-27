@@ -116,6 +116,10 @@
   width: 100%;
 }
 
+.TextArea {
+  width: 100%;
+}
+
 .HomePage__note-add {
   margin-top: var(--space);
 }
@@ -127,6 +131,9 @@
 }
 
 .ListItem {
+  padding: var(--space);
+  display: flex;
+  align-items: center;
   background-color: var(--color-default);
   transition: background-color var(--transition-delay);
   cursor: pointer;
