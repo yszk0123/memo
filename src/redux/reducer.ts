@@ -20,7 +20,7 @@ export const reducer = createReducer<State, ActionType, ValueOf<Action>>(initial
     return { ...state, notes };
   },
   [ActionType.NOTE_ADD_SUCCESS](state, { payload: { note } }) {
-    return { ...state, notes: [...state.notes, note] };
+    return { ...state, notes: [note, ...state.notes] };
   },
   [ActionType.NOTE_REMOVE_SUCCESS](state, { payload: { noteId } }) {
     const notes = state.notes.filter(note => note.id !== noteId);

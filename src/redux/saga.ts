@@ -104,7 +104,10 @@ function* noteGetAllSaga(_: Action[ActionType.NOTE_GET_ALL_REQUEST]): SagaIterat
   }
 
   const db = firebase.firestore();
-  const notesRef = db.collection('notes').where('authorId', '==', user.id);
+  const notesRef = db
+    .collection('notes')
+    .where('authorId', '==', user.id)
+    .orderBy('createdAt', 'desc');
   const snapshot: firebase.firestore.QuerySnapshot = yield call([notesRef, notesRef.get]);
   const notes = getAll<Note>(snapshot);
   yield put(actions.NOTE_GET_ALL_SUCCESS(notes));
