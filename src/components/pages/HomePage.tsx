@@ -61,6 +61,7 @@ const NoteAdd: React.FunctionComponent<{ onSubmit: (text: string) => void }> = (
 
   const handleSubmit = useCallback(() => {
     onSubmit(text);
+    setText('');
   }, [text, onSubmit]);
 
   const disabled = text === '';

@@ -8,6 +8,8 @@ export enum ActionType {
   USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS',
   USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST',
   USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS',
+  NOTE_GET_ALL_REQUEST = 'NOTE_GET_ALL_REQUEST',
+  NOTE_GET_ALL_SUCCESS = 'NOTE_GET_ALL_SUCCESS',
   NOTE_ADD_REQUEST = 'NOTE_ADD_REQUEST',
   NOTE_ADD_SUCCESS = 'NOTE_ADD_SUCCESS',
   NOTE_REMOVE = 'NOTE_REMOVE',
@@ -21,6 +23,11 @@ export const actions = createActionCreators<ActionType>()({
   USER_LOGIN_SUCCESS: (user: User) => ({ type: ActionType.USER_LOGIN_SUCCESS, payload: { user } }),
   USER_LOGOUT_REQUEST: () => ({ type: ActionType.USER_LOGOUT_REQUEST }),
   USER_LOGOUT_SUCCESS: () => ({ type: ActionType.USER_LOGOUT_SUCCESS }),
+  NOTE_GET_ALL_REQUEST: () => ({ type: ActionType.NOTE_GET_ALL_REQUEST }),
+  NOTE_GET_ALL_SUCCESS: (notes: Note[]) => ({
+    type: ActionType.NOTE_GET_ALL_SUCCESS,
+    payload: { notes },
+  }),
 });
 
 export type Action = ReturnTypes<typeof actions>;

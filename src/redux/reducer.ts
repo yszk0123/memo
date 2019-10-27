@@ -16,6 +16,9 @@ export const reducer = createReducer<State, ActionType, ValueOf<Action>>(initial
     return { ...state, user: null };
   },
 
+  [ActionType.NOTE_GET_ALL_SUCCESS](state, { payload: { notes } }) {
+    return { ...state, notes };
+  },
   [ActionType.NOTE_ADD_SUCCESS](state, { payload: { note } }) {
     return { ...state, notes: [...state.notes, note] };
   },
