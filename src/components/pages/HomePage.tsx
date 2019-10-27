@@ -6,11 +6,11 @@ import { actions } from '../../redux/actions';
 import { selectors } from '../../redux/selectors';
 import { noop } from '../../utils/noop';
 import { Button } from '../atoms/Button';
-import { Layout } from '../organisms/Layout';
+import { AppLayout } from '../organisms/AppLayout';
 
 interface Props {}
 
-export const AppPage: React.FunctionComponent<Props> = () => {
+export const HomePage: React.FunctionComponent<Props> = () => {
   const dispatch = useDispatch();
 
   const user = useTypedSelector(selectors.user);
@@ -27,15 +27,15 @@ export const AppPage: React.FunctionComponent<Props> = () => {
 
   if (user === null) {
     return (
-      <Layout>
+      <AppLayout>
         <Button onClick={handleLogin}>Login</Button>
-      </Layout>
+      </AppLayout>
     );
   }
 
   return (
-    <Layout>
+    <AppLayout>
       <p>{user.displayName ? `Hello, ${user.id}!` : 'Hello'}</p>
-    </Layout>
+    </AppLayout>
   );
 };

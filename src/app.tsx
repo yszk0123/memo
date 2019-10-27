@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { AppPage } from './components/pages/AppPage';
+import { HomePage } from './components/pages/HomePage';
 import { createStore } from './redux/store';
 
 function main() {
@@ -11,7 +11,7 @@ function main() {
 
   ReactDOM.render(
     <Provider store={store}>
-      <AppPage />
+      <HomePage />
     </Provider>,
     rootElement,
   );
