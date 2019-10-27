@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useGlobalKeyboardShortcut } from '../../hooks/useGlobalKeyboardShortcut';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
@@ -81,12 +81,33 @@ const NoteList: React.FunctionComponent<{ notes: Note[] }> = ({ notes }) => {
   return (
     <div className="NoteList">
       {notes.map(note => {
-        return (
-          <div key={note.id} className="NoteList__note">
-            {note.text}
-          </div>
-        );
+        return <NoteView key={note.id} note={note} />;
       })}
     </div>
   );
 };
+
+const NoteView: React.FunctionComponent<{ note: Note }> = ({ note }) => {
+  const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
+
+  return (
+    <div className="NoteView">
+      <p className="NoteView-text">{note.text}</p>
+      <p className="NoteView-created-at">{createdAt}</p>
+    </div>
+  );
+};
+
+function formatTime(timestamp: number): string {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const d = date.getDate();
+  const h = date.getHours();
+  const m = date.getMinutes();
+  return `${year}-${pad2(month)}-${pad2(d)} ${pad2(h)}:${pad2(m)}`;
+}
+
+function pad2(n: number): string {
+  return n < 10 ? `0${n}` : `${n}`;
+}

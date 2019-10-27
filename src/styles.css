@@ -41,6 +41,7 @@
   --color-primary-text: var(--palette-white);
   --color-secondary: var(--palette-pink-a400);
   --color-secondary-text: var(--palette-white);
+  --color-secondary-text--reverse: var(--palette-grey-500);
 }
 
 .AppLayout {
@@ -96,4 +97,17 @@
 
 .HomePage__note-add {
   margin-top: var(--space);
+}
+
+.NoteView {
+  display: flex;
+  justify-content: space-between;
+}
+
+.NoteView-text {
+  flex-grow: 1;
+}
+
+.NoteView-created-at {
+  color: var(--color-secondary-text--reverse);
 }
