@@ -7,6 +7,7 @@ import { selectors } from '../../redux/selectors';
 import { Note } from '../../types/NoteType';
 import { noop } from '../../utils/noop';
 import { Button } from '../atoms/Button';
+import { TextInput } from '../atoms/TextInput';
 import { AppLayout } from '../organisms/AppLayout';
 
 interface Props {}
@@ -68,8 +69,8 @@ const NoteAdd: React.FunctionComponent<{ onSubmit: (text: string) => void }> = (
 
   return (
     <div>
-      <input value={text} onChange={handleChange} />
-      <Button disabled={disabled} onClick={handleSubmit}>
+      <TextInput value={text} onChange={handleChange} />
+      <Button className="HomePage__note-add" disabled={disabled} onClick={handleSubmit}>
         Add
       </Button>
     </div>

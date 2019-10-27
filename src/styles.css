@@ -89,3 +89,11 @@
   border-color: var(--color-disabled);
   cursor: default;
 }
+
+.TextInput {
+  width: 100%;
+}
+
+.HomePage__note-add {
+  margin-top: var(--space);
+}
