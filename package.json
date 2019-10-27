@@ -1,7 +1,8 @@
 {
+  "private": true,
   "name": "memo",
   "version": "0.1.0",
-  "description": "",
+  "description": "Simple note-taking application",
   "keywords": [],
   "main": "src/index.js",
   "homepage": "https://yszk0123.github.io/memo",
