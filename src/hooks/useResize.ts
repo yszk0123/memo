@@ -12,7 +12,7 @@ function debounce(callback: () => void, delay: number): () => void {
   }
   function debounced() {
     reset();
-    timeoutId = setTimeout(() => {
+    timeoutId = self.setTimeout(() => {
       callback();
     }, delay);
     return reset;

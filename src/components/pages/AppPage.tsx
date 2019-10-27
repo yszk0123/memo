@@ -5,6 +5,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { actions } from '../../redux/actions';
 import { selectors } from '../../redux/selectors';
 import { noop } from '../../utils/noop';
+import { Button } from '../atoms/Button';
 
 interface Props {}
 
@@ -16,7 +17,11 @@ export const AppPage: React.FunctionComponent<Props> = () => {
   const handleDeselect = useCallback(() => {
     // FIXME
     dispatch(actions.NOTE_ADD());
-  }, []);
+  }, [dispatch]);
+
+  const handleLogin = useCallback(() => {
+    dispatch(actions.USER_LOGIN_REQUEST());
+  }, [dispatch]);
 
   useGlobalKeyboardShortcut({
     dispatch,
@@ -27,6 +32,7 @@ export const AppPage: React.FunctionComponent<Props> = () => {
   return (
     <div className="App" onClick={handleDeselect}>
       <p>{user !== null ? `Hello, ${user.id}!` : 'Hello'}</p>
+      {user === null && <Button onClick={handleLogin}>Login</Button>}
     </div>
   );
 };

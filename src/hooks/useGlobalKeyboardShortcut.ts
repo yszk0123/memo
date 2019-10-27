@@ -20,7 +20,7 @@ export function useGlobalKeyboardShortcut({ dispatch, onAdd, onSave }: Options) 
       } else if (event.code === KeyCode.ESCAPE) {
         // dispatch(actions.NOTE_DESELECT());
       } else if ((event.ctrlKey || event.metaKey) && event.code === KeyCode.KEY_S) {
-        // dispatch(actions.NOTE_SAVE());
+        onSave();
       } else {
         return;
       }
