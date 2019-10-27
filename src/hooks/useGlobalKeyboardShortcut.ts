@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { actions } from '../redux/actions';
 import { Dispatch } from '../types/ReduxType';
 import { KeyCode } from '../utils/Keyboard';
 import { useGlobalKeyboard } from './useGlobalKeyboard';
@@ -16,7 +15,7 @@ export function useGlobalKeyboardShortcut({ dispatch, onAdd, onSave }: Options) 
       if (event.code === KeyCode.KEY_A) {
         onAdd();
       } else if (event.code === KeyCode.BACKSPACE) {
-        dispatch(actions.NOTE_ADD());
+        // dispatch(actions.NOTE_ADD());
       } else if (event.code === KeyCode.ESCAPE) {
         // dispatch(actions.NOTE_DESELECT());
       } else if ((event.ctrlKey || event.metaKey) && event.code === KeyCode.KEY_S) {

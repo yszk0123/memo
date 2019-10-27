@@ -5,6 +5,7 @@ import { Action, ActionType } from './actions';
 
 const initialState: State = {
   user: null,
+  notes: [],
 };
 
 export const reducer = createReducer<State, ActionType, ValueOf<Action>>(initialState, {
@@ -13,5 +14,9 @@ export const reducer = createReducer<State, ActionType, ValueOf<Action>>(initial
   },
   [ActionType.USER_LOGOUT_SUCCESS](state) {
     return { ...state, user: null };
+  },
+
+  [ActionType.NOTE_ADD_SUCCESS](state, { payload: { note } }) {
+    return { ...state, notes: [...state.notes, note] };
   },
 });

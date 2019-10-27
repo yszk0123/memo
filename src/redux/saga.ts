@@ -1,8 +1,20 @@
 import { eventChannel, EventChannel, SagaIterator } from 'redux-saga';
-import { all, call, CallEffect, cancelled, fork, put, take, takeLatest } from 'redux-saga/effects';
+import {
+  all,
+  call,
+  CallEffect,
+  cancelled,
+  fork,
+  put,
+  select,
+  take,
+  takeLatest,
+} from 'redux-saga/effects';
 import { firebase } from '../firebase';
+import { createNote } from '../types/NoteType';
 import { User } from '../types/UserType';
-import { actions, ActionType } from './actions';
+import { Action, actions, ActionType } from './actions';
+import { selectors } from './selectors';
 
 type EmptyUser = { _: 'EmptyUser' };
 
@@ -54,10 +66,27 @@ function* watchUserStatusChangeSaga(): SagaIterator {
   }
 }
 
+function* noteAddSaga({
+  payload: { text },
+}: Action[ActionType.NOTE_ADD_REQUEST]): SagaIterator<void> {
+  const user: User | null = yield select(selectors.user);
+  if (user === null) {
+    return;
+  }
+
+  const note = createNote(user.id, text);
+
+  const db = firebase.firestore();
+  const notesRef = db.collection('notes');
+  yield call([notesRef, notesRef.add], note);
+  yield put(actions.NOTE_ADD_SUCCESS(note));
+}
+
 export function* saga(): SagaIterator {
   yield all([
     takeLatest(ActionType.USER_LOGIN_REQUEST, userLoginSaga),
     takeLatest(ActionType.USER_LOGOUT_REQUEST, userLogoutSaga),
+    takeLatest(ActionType.NOTE_ADD_REQUEST, noteAddSaga),
     fork(watchUserStatusChangeSaga),
   ]);
 }
