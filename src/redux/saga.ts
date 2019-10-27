@@ -8,6 +8,7 @@ import {
   put,
   select,
   take,
+  takeEvery,
   takeLatest,
 } from 'redux-saga/effects';
 import { firebase } from '../firebase';
@@ -75,12 +76,25 @@ function* noteAddSaga({
     return;
   }
 
-  const note = createNote(user.id, text);
+  const db = firebase.firestore();
+  const noteRef = db.collection('notes').doc();
+  const note = createNote(noteRef, user.id, text);
+  yield call([noteRef, noteRef.set], note);
+  yield put(actions.NOTE_ADD_SUCCESS(note));
+}
+
+function* noteRemoveSaga({
+  payload: { noteId },
+}: Action[ActionType.NOTE_REMOVE_REQUEST]): SagaIterator<void> {
+  const user: User | null = yield select(selectors.user);
+  if (user === null) {
+    return;
+  }
 
   const db = firebase.firestore();
-  const notesRef = db.collection('notes');
-  yield call([notesRef, notesRef.add], note);
-  yield put(actions.NOTE_ADD_SUCCESS(note));
+  const noteRef = db.collection('notes').doc(noteId);
+  yield call([noteRef, noteRef.delete]);
+  yield put(actions.NOTE_REMOVE_SUCCESS(noteId));
 }
 
 function* noteGetAllSaga(_: Action[ActionType.NOTE_GET_ALL_REQUEST]): SagaIterator<void> {
@@ -101,7 +115,8 @@ export function* saga(): SagaIterator {
     takeLatest(ActionType.USER_LOGIN_REQUEST, userLoginSaga),
     takeLatest(ActionType.USER_LOGOUT_REQUEST, userLogoutSaga),
     takeLatest(ActionType.NOTE_GET_ALL_REQUEST, noteGetAllSaga),
-    takeLatest(ActionType.NOTE_ADD_REQUEST, noteAddSaga),
+    takeEvery(ActionType.NOTE_ADD_REQUEST, noteAddSaga),
+    takeEvery(ActionType.NOTE_REMOVE_REQUEST, noteRemoveSaga),
     fork(watchUserStatusChangeSaga),
   ]);
 }

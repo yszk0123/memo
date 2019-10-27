@@ -22,4 +22,8 @@ export const reducer = createReducer<State, ActionType, ValueOf<Action>>(initial
   [ActionType.NOTE_ADD_SUCCESS](state, { payload: { note } }) {
     return { ...state, notes: [...state.notes, note] };
   },
+  [ActionType.NOTE_REMOVE_SUCCESS](state, { payload: { noteId } }) {
+    const notes = state.notes.filter(note => note.id !== noteId);
+    return { ...state, notes };
+  },
 });

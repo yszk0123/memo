@@ -1,5 +1,5 @@
-import { generateId } from '../utils/generateId';
 import { getCurrentTime } from '../utils/getCurrentTime';
+import { Doc } from './DocType';
 
 export interface Note {
   id: string;
@@ -8,9 +8,9 @@ export interface Note {
   createdAt: number;
 }
 
-export function createNote(authorId: string, text: string): Note {
+export function createNote(doc: Doc, authorId: string, text: string): Note {
   return {
-    id: generateId(),
+    id: doc.id,
     text,
     authorId,
     createdAt: getCurrentTime(),

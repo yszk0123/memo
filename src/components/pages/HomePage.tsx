@@ -6,7 +6,9 @@ import { actions } from '../../redux/actions';
 import { selectors } from '../../redux/selectors';
 import { Note } from '../../types/NoteType';
 import { noop } from '../../utils/noop';
-import { Button } from '../atoms/Button';
+import { PrimaryButton, SecondaryButton } from '../atoms/Button';
+import { List } from '../atoms/List';
+import { ListItem } from '../atoms/ListItem';
 import { TextInput } from '../atoms/TextInput';
 import { AppLayout } from '../organisms/AppLayout';
 
@@ -29,6 +31,13 @@ export const HomePage: React.FunctionComponent<Props> = () => {
     [dispatch],
   );
 
+  const handleNoteRemove = useCallback(
+    (noteId: string) => {
+      dispatch(actions.NOTE_REMOVE_REQUEST(noteId));
+    },
+    [dispatch],
+  );
+
   useGlobalKeyboardShortcut({
     dispatch,
     onAdd: noop,
@@ -38,7 +47,7 @@ export const HomePage: React.FunctionComponent<Props> = () => {
   if (user === null) {
     return (
       <AppLayout>
-        <Button onClick={handleLogin}>Login</Button>
+        <PrimaryButton onClick={handleLogin}>Login</PrimaryButton>
       </AppLayout>
     );
   }
@@ -46,7 +55,7 @@ export const HomePage: React.FunctionComponent<Props> = () => {
   return (
     <AppLayout>
       <p>{user.displayName ? `Hello, ${user.id}!` : 'Hello'}</p>
-      <NoteList notes={notes} />
+      <NoteList notes={notes} onRemove={handleNoteRemove} />
       <NoteAdd onSubmit={handleNoteAdd} />
     </AppLayout>
   );
@@ -70,31 +79,44 @@ const NoteAdd: React.FunctionComponent<{ onSubmit: (text: string) => void }> = (
   return (
     <div>
       <TextInput value={text} onChange={handleChange} />
-      <Button className="HomePage__note-add" disabled={disabled} onClick={handleSubmit}>
+      <PrimaryButton className="HomePage__note-add" disabled={disabled} onClick={handleSubmit}>
         Add
-      </Button>
+      </PrimaryButton>
     </div>
   );
 };
 
-const NoteList: React.FunctionComponent<{ notes: Note[] }> = ({ notes }) => {
+const NoteList: React.FunctionComponent<{ notes: Note[]; onRemove: (noteId: string) => void }> = ({
+  notes,
+  onRemove,
+}) => {
   return (
-    <div className="NoteList">
+    <List className="NoteList">
       {notes.map(note => {
-        return <NoteView key={note.id} note={note} />;
+        return <NoteView key={note.id} note={note} onRemove={onRemove} />;
       })}
-    </div>
+    </List>
   );
 };
 
-const NoteView: React.FunctionComponent<{ note: Note }> = ({ note }) => {
+const NoteView: React.FunctionComponent<{ note: Note; onRemove: (noteId: string) => void }> = ({
+  note,
+  onRemove,
+}) => {
   const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
 
+  const handleRemove = useCallback(() => {
+    onRemove(note.id);
+  }, [note, onRemove]);
+
   return (
-    <div className="NoteView">
+    <ListItem className="NoteView">
       <p className="NoteView-text">{note.text}</p>
       <p className="NoteView-created-at">{createdAt}</p>
-    </div>
+      <SecondaryButton className="NoteView-remove" onClick={handleRemove}>
+        Remove
+      </SecondaryButton>
+    </ListItem>
   );
 };
 
