@@ -4,12 +4,12 @@ import 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: 'notebook-bf8bc.firebaseapp.com',
-  databaseURL: 'https://notebook-bf8bc.firebaseio.com',
-  projectId: 'notebook-bf8bc',
-  storageBucket: 'notebook-bf8bc.appspot.com',
+  authDomain: 'counter-64673.firebaseapp.com',
+  databaseURL: 'https://counter-64673.firebaseio.com',
+  projectId: 'counter-64673',
+  storageBucket: 'counter-64673.appspot.com',
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: '1:898202060871:web:f19402732672f2bb',
+  appId: '1:61000756567:web:5d923c067f28d0ab8c6212',
 };
 
 firebase.initializeApp(firebaseConfig);
