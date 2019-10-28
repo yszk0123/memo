@@ -29,8 +29,14 @@ export const actions = createActionCreators<ActionType>()({
     type: ActionType.NOTE_REMOVE_SUCCESS,
     payload: { noteId },
   }),
-  NOTE_UPDATE_REQUEST: () => ({ type: ActionType.NOTE_UPDATE_REQUEST }),
-  NOTE_UPDATE_SUCCESS: () => ({ type: ActionType.NOTE_UPDATE_SUCCESS }),
+  NOTE_UPDATE_REQUEST: (noteId: string, text: string) => ({
+    type: ActionType.NOTE_UPDATE_REQUEST,
+    payload: { noteId, text },
+  }),
+  NOTE_UPDATE_SUCCESS: (note: Note) => ({
+    type: ActionType.NOTE_UPDATE_SUCCESS,
+    payload: { note },
+  }),
   USER_LOGIN_REQUEST: () => ({ type: ActionType.USER_LOGIN_REQUEST }),
   USER_LOGIN_SUCCESS: (user: User) => ({ type: ActionType.USER_LOGIN_SUCCESS, payload: { user } }),
   USER_LOGOUT_REQUEST: () => ({ type: ActionType.USER_LOGOUT_REQUEST }),

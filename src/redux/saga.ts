@@ -83,6 +83,22 @@ function* noteAddSaga({
   yield put(actions.NOTE_ADD_SUCCESS(note));
 }
 
+function* noteUpdateSaga({
+  payload: { noteId, text },
+}: Action[ActionType.NOTE_UPDATE_REQUEST]): SagaIterator<void> {
+  const user: User | null = yield select(selectors.user);
+  if (user === null) {
+    return;
+  }
+
+  const db = firebase.firestore();
+  const noteRef = db.collection('notes').doc(noteId);
+  yield call([noteRef, noteRef.update], 'text', text);
+  const newNoteRef = yield call([noteRef, noteRef.get]);
+  const newNote = yield call([newNoteRef, newNoteRef.data]);
+  yield put(actions.NOTE_UPDATE_SUCCESS(newNote));
+}
+
 function* noteRemoveSaga({
   payload: { noteId },
 }: Action[ActionType.NOTE_REMOVE_REQUEST]): SagaIterator<void> {
@@ -119,6 +135,7 @@ export function* saga(): SagaIterator {
     takeLatest(ActionType.USER_LOGOUT_REQUEST, userLogoutSaga),
     takeLatest(ActionType.NOTE_GET_ALL_REQUEST, noteGetAllSaga),
     takeEvery(ActionType.NOTE_ADD_REQUEST, noteAddSaga),
+    takeEvery(ActionType.NOTE_UPDATE_REQUEST, noteUpdateSaga),
     takeEvery(ActionType.NOTE_REMOVE_REQUEST, noteRemoveSaga),
     fork(watchUserStatusChangeSaga),
   ]);

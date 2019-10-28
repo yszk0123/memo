@@ -15,9 +15,16 @@ import { AppLayout } from '../organisms/AppLayout';
 
 interface Props {}
 
+enum DialogType {
+  NONE,
+  ADD,
+  UPDATE,
+}
+
 export const HomePage: React.FunctionComponent<Props> = () => {
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
+  const [dialogType, setDialogType] = useState(DialogType.NONE);
+  const [currentNote, setCurrentNote] = useState<Note | null>(null);
 
   const user = useTypedSelector(selectors.user);
   const notes = useTypedSelector(selectors.notes);
@@ -29,17 +36,32 @@ export const HomePage: React.FunctionComponent<Props> = () => {
   const handleNoteAdd = useCallback(
     (text: string) => {
       dispatch(actions.NOTE_ADD_REQUEST(text));
-      setIsOpen(false);
+      setDialogType(DialogType.NONE);
     },
     [dispatch],
   );
 
-  const handleOpen = useCallback(() => {
-    setIsOpen(true);
+  const handleNoteUpdate = useCallback(
+    (text: string) => {
+      if (currentNote) {
+        dispatch(actions.NOTE_UPDATE_REQUEST(currentNote.id, text));
+        setDialogType(DialogType.NONE);
+      }
+    },
+    [dispatch, currentNote],
+  );
+
+  const handleOpenAdd = useCallback(() => {
+    setDialogType(DialogType.ADD);
+  }, []);
+
+  const handleOpenUpdate = useCallback((note: Note) => {
+    setDialogType(DialogType.UPDATE);
+    setCurrentNote(note);
   }, []);
 
   const handleCancel = useCallback(() => {
-    setIsOpen(false);
+    setDialogType(DialogType.NONE);
   }, []);
 
   const handleNoteRemove = useCallback(
@@ -66,18 +88,28 @@ export const HomePage: React.FunctionComponent<Props> = () => {
   return (
     <AppLayout>
       <p>{user.displayName ? `Hello, ${user.id}!` : 'Hello'}</p>
-      <NoteList notes={notes} onRemove={handleNoteRemove} />
-      {isOpen && <NoteAddDialog onSubmit={handleNoteAdd} onCancel={handleCancel} />}
-      <PrimaryButton onClick={handleOpen}>Add</PrimaryButton>
+      <NoteList notes={notes} onClick={handleOpenUpdate} onRemove={handleNoteRemove} />
+      {dialogType === DialogType.ADD && (
+        <NoteAddDialog initialText="" onSubmit={handleNoteAdd} onCancel={handleCancel} />
+      )}
+      {dialogType === DialogType.UPDATE && currentNote !== null && (
+        <NoteAddDialog
+          initialText={currentNote.text}
+          onSubmit={handleNoteUpdate}
+          onCancel={handleCancel}
+        />
+      )}
+      <PrimaryButton onClick={handleOpenAdd}>Add</PrimaryButton>
     </AppLayout>
   );
 };
 
 const NoteAddDialog: React.FunctionComponent<{
+  initialText: string;
   onSubmit: (text: string) => void;
   onCancel: () => void;
-}> = ({ onSubmit, onCancel }) => {
-  const [text, setText] = useState('');
+}> = ({ initialText, onSubmit, onCancel }) => {
+  const [text, setText] = useState(initialText);
 
   const handleChange = useCallback((event: React.FormEvent<HTMLTextAreaElement>) => {
     const newText = event.currentTarget.value;
@@ -108,31 +140,42 @@ const NoteAddDialog: React.FunctionComponent<{
   );
 };
 
-const NoteList: React.FunctionComponent<{ notes: Note[]; onRemove: (noteId: string) => void }> = ({
-  notes,
-  onRemove,
-}) => {
+const NoteList: React.FunctionComponent<{
+  notes: Note[];
+  onClick: (note: Note) => void;
+  onRemove: (noteId: string) => void;
+}> = ({ notes, onClick, onRemove }) => {
   return (
     <List className="NoteList">
       {notes.map(note => {
-        return <NoteView key={note.id} note={note} onRemove={onRemove} />;
+        return <NoteView key={note.id} note={note} onClick={onClick} onRemove={onRemove} />;
       })}
     </List>
   );
 };
 
-const NoteView: React.FunctionComponent<{ note: Note; onRemove: (noteId: string) => void }> = ({
-  note,
-  onRemove,
-}) => {
+const NoteView: React.FunctionComponent<{
+  note: Note;
+  onClick: (note: Note) => void;
+  onRemove: (noteId: string) => void;
+}> = ({ note, onClick, onRemove }) => {
   const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
 
-  const handleRemove = useCallback(() => {
-    onRemove(note.id);
-  }, [note, onRemove]);
+  const handleClick = useCallback(() => {
+    onClick(note);
+  }, [note, onClick]);
+
+  const handleRemove = useCallback(
+    (event: React.MouseEvent) => {
+      onRemove(note.id);
+      event.preventDefault();
+      event.stopPropagation();
+    },
+    [note, onRemove],
+  );
 
   return (
-    <ListItem className="NoteView">
+    <ListItem className="NoteView" onClick={handleClick}>
       <pre className="NoteView-text">{note.text}</pre>
       <p className="NoteView-created-at">{createdAt}</p>
       <SecondaryButton className="NoteView-remove" onClick={handleRemove}>
