@@ -6,16 +6,18 @@ import { actions } from '../../redux/actions';
 import { selectors } from '../../redux/selectors';
 import { Note } from '../../types/NoteType';
 import { noop } from '../../utils/noop';
-import { PrimaryButton, SecondaryButton } from '../atoms/Button';
+import { DefaultButton, PrimaryButton, SecondaryButton } from '../atoms/Button';
 import { List } from '../atoms/List';
 import { ListItem } from '../atoms/ListItem';
 import { TextArea } from '../atoms/TextArea';
+import { Dialog, DialogActions, DialogContent } from '../molecules/Dialog';
 import { AppLayout } from '../organisms/AppLayout';
 
 interface Props {}
 
 export const HomePage: React.FunctionComponent<Props> = () => {
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
 
   const user = useTypedSelector(selectors.user);
   const notes = useTypedSelector(selectors.notes);
@@ -27,9 +29,18 @@ export const HomePage: React.FunctionComponent<Props> = () => {
   const handleNoteAdd = useCallback(
     (text: string) => {
       dispatch(actions.NOTE_ADD_REQUEST(text));
+      setIsOpen(false);
     },
     [dispatch],
   );
+
+  const handleOpen = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   const handleNoteRemove = useCallback(
     (noteId: string) => {
@@ -56,12 +67,16 @@ export const HomePage: React.FunctionComponent<Props> = () => {
     <AppLayout>
       <p>{user.displayName ? `Hello, ${user.id}!` : 'Hello'}</p>
       <NoteList notes={notes} onRemove={handleNoteRemove} />
-      <NoteAdd onSubmit={handleNoteAdd} />
+      {isOpen && <NoteAddDialog onSubmit={handleNoteAdd} onCancel={handleCancel} />}
+      <PrimaryButton onClick={handleOpen}>Add</PrimaryButton>
     </AppLayout>
   );
 };
 
-const NoteAdd: React.FunctionComponent<{ onSubmit: (text: string) => void }> = ({ onSubmit }) => {
+const NoteAddDialog: React.FunctionComponent<{
+  onSubmit: (text: string) => void;
+  onCancel: () => void;
+}> = ({ onSubmit, onCancel }) => {
   const [text, setText] = useState('');
 
   const handleChange = useCallback((event: React.FormEvent<HTMLTextAreaElement>) => {
@@ -77,12 +92,19 @@ const NoteAdd: React.FunctionComponent<{ onSubmit: (text: string) => void }> = (
   const disabled = text === '';
 
   return (
-    <div>
-      <TextArea value={text} onChange={handleChange} />
-      <PrimaryButton className="HomePage__note-add" disabled={disabled} onClick={handleSubmit}>
-        Add
-      </PrimaryButton>
-    </div>
+    <Dialog className="NoteAddDialog">
+      <DialogContent className="NoteAddDialog__content">
+        <TextArea className="NoteAddDialog__text" value={text} onChange={handleChange} />
+      </DialogContent>
+      <DialogActions className="NoteAddDialog__actions">
+        <DefaultButton className="NoteAddDialog__button" onClick={onCancel}>
+          Cancel
+        </DefaultButton>
+        <PrimaryButton className="NoteAddDialog__button" disabled={disabled} onClick={handleSubmit}>
+          Add
+        </PrimaryButton>
+      </DialogActions>
+    </Dialog>
   );
 };
 

@@ -15,6 +15,10 @@ const Button: React.FunctionComponent<Props> = ({ className, children, disabled,
   );
 };
 
+export const DefaultButton: React.FunctionComponent<Props> = ({ className, ...props }) => {
+  return <Button className={classNames('DefaultButton', className)} {...props} />;
+};
+
 export const PrimaryButton: React.FunctionComponent<Props> = ({ className, ...props }) => {
   return <Button className={classNames('PrimaryButton', className)} {...props} />;
 };

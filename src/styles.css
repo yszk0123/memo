@@ -38,16 +38,21 @@
   --color-default: var(--palette-white);
   --color-default--hover: var(--palette-grey-200);
   --color-text: var(--palette-grey-900);
-  --color-disabled: var(--palette-grey-500);
-  --color-primary: var(--palette-blue-500);
-  --color-primary-hover: var(--palette-blue-300);
-  --color-primary-active: var(--palette-blue-200);
-  --color-primary-text: var(--palette-white);
-  --color-secondary: var(--palette-pink-a400);
-  --color-secondary-hover: var(--palette-pink-300);
-  --color-secondary-active: var(--palette-pink-200);
-  --color-secondary-text: var(--palette-white);
-  --color-secondary-text--reverse: var(--palette-grey-500);
+  --color-disabled: var(--palette-grey-200);
+  --color-button-default: var(--palette-white);
+  --color-button-default-hover: var(--palette-grey-200);
+  --color-button-default-active: var(--palette-grey-300);
+  --color-button-default-text: var(--palette-grey-900);
+  --color-button-primary: var(--palette-blue-500);
+  --color-button-primary-hover: var(--palette-blue-300);
+  --color-button-primary-active: var(--palette-blue-200);
+  --color-button-primary-text: var(--palette-white);
+  --color-button-secondary: var(--palette-pink-a400);
+  --color-button-secondary-hover: var(--palette-pink-300);
+  --color-button-secondary-active: var(--palette-pink-200);
+  --color-button-secondary-text: var(--palette-white);
+  --color-button-secondary-text--reverse: var(--palette-grey-500);
+  --color-sheet: var(--palette-grey-900);
 }
 
 .AppLayout {
@@ -59,9 +64,9 @@
   font-size: var(--font-md);
 }
 .AppLayout__header {
-  background-color: var(--color-primary);
+  background-color: var(--color-button-primary);
   padding: var(--space);
-  color: var(--color-primary-text);
+  color: var(--color-button-primary-text);
   box-shadow: 0 1px 1px 0 var(--color-shadow);
   width: 100%;
 }
@@ -86,30 +91,43 @@
   cursor: default;
 }
 
+.DefaultButton {
+  background-color: var(--color-button-default);
+  border-color: var(--color-button-default);
+}
+.DefaultButton:hover {
+  background-color: var(--color-button-default-hover);
+  border-color: var(--color-button-default-hover);
+}
+.DefaultButton:active {
+  background-color: var(--color-button-default-active);
+  border-color: var(--color-button-default-active);
+}
+
 .PrimaryButton {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+  background-color: var(--color-button-primary);
+  border-color: var(--color-button-primary);
 }
 .PrimaryButton:hover {
-  background-color: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
+  background-color: var(--color-button-primary-hover);
+  border-color: var(--color-button-primary-hover);
 }
 .PrimaryButton:active {
-  background-color: var(--color-primary-active);
-  border-color: var(--color-primary-active);
+  background-color: var(--color-button-primary-active);
+  border-color: var(--color-button-primary-active);
 }
 
 .SecondaryButton {
-  background-color: var(--color-secondary);
-  border-color: var(--color-secondary);
+  background-color: var(--color-button-secondary);
+  border-color: var(--color-button-secondary);
 }
 .SecondaryButton:hover {
-  background-color: var(--color-secondary-hover);
-  border-color: var(--color-secondary-hover);
+  background-color: var(--color-button-secondary-hover);
+  border-color: var(--color-button-secondary-hover);
 }
 .SecondaryButton:active {
-  background-color: var(--color-secondary-active);
-  border-color: var(--color-secondary-active);
+  background-color: var(--color-button-secondary-active);
+  border-color: var(--color-button-secondary-active);
 }
 
 .TextInput {
@@ -120,8 +138,52 @@
   width: 100%;
 }
 
-.HomePage__note-add {
-  margin-top: var(--space);
+.Dialog__outer {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
+.Dialog__sheet {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  background: var(--color-sheet);
+}
+.Dialog__main-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+.Dialog__main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  width: 80%;
+  height: 80%;
+}
+
+.DialogContent {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.DialogActions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Paper {
+  box-shadow: 0 1px 2px 1px var(--color-shadow);
 }
 
 .List {
@@ -142,6 +204,27 @@
   background-color: var(--color-default--hover);
 }
 
+.NoteAddDialog {
+  background-color: var(--color-default);
+  padding: calc(var(--space) * 2);
+}
+.NoteAddDialog__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.NoteAddDialog__text {
+  min-height: 6rem;
+  flex-grow: 1;
+}
+.NoteAddDialog__actions {
+  margin-top: var(--space);
+}
+.NoteAddDialog__button + .NoteAddDialog__button {
+  margin-left: var(--space);
+}
+
 .NoteView {
   display: flex;
   justify-content: space-between;
@@ -150,7 +233,7 @@
   flex-grow: 1;
 }
 .NoteView-created-at {
-  color: var(--color-secondary-text--reverse);
+  color: var(--color-button-secondary-text--reverse);
 }
 .NoteView-remove {
   margin-left: var(--space);
