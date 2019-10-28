@@ -64,6 +64,9 @@
   font-size: var(--font-md);
 }
 .AppLayout__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: var(--color-button-primary);
   padding: var(--space);
   color: var(--color-button-primary-text);

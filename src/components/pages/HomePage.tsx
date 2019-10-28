@@ -79,15 +79,14 @@ export const HomePage: React.FunctionComponent<Props> = () => {
 
   if (user === null) {
     return (
-      <AppLayout>
+      <AppLayout user={null}>
         <PrimaryButton onClick={handleLogin}>Login</PrimaryButton>
       </AppLayout>
     );
   }
 
   return (
-    <AppLayout>
-      <p>{user.displayName ? `Hello, ${user.id}!` : 'Hello'}</p>
+    <AppLayout user={user}>
       <NoteList notes={notes} onClick={handleOpenUpdate} onRemove={handleNoteRemove} />
       {dialogType === DialogType.ADD && (
         <NoteAddDialog initialText="" onSubmit={handleNoteAdd} onCancel={handleCancel} />
