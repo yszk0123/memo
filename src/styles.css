@@ -218,6 +218,9 @@
   justify-content: center;
 }
 .NoteAddDialog__text {
+  /* Move to Dialog */
+  font-size: var(--font-md);
+
   min-height: 6rem;
   flex-grow: 1;
 }
@@ -234,8 +237,11 @@
 }
 .NoteView-text {
   flex-grow: 1;
+  overflow-x: hidden;
 }
 .NoteView-created-at {
+  font-size: var(--font-sm);
+  min-width: 120px;
   color: var(--color-button-secondary-text--reverse);
 }
 .NoteView-remove {
