@@ -7,7 +7,7 @@ import { NoteAddDialog } from '../src/components/organisms/NoteAddDialog';
 import { NoteList } from '../src/components/organisms/NoteList';
 import { useGlobalKeyboardShortcut } from '../src/hooks/useGlobalKeyboardShortcut';
 import { useTypedSelector } from '../src/hooks/useTypedSelector';
-import { actions } from '../src/redux/actions';
+import { noteAdd, noteRemove, noteUpdate, userLogin } from '../src/redux/actions';
 import { selectors } from '../src/redux/selectors';
 import { Note } from '../src/types/NoteType';
 import { noop } from '../src/utils/noop';
@@ -29,12 +29,12 @@ const Index: NextPage<Props> = () => {
   const notes = useTypedSelector(selectors.notes);
 
   const handleLogin = useCallback(() => {
-    dispatch(actions.USER_LOGIN_REQUEST());
+    dispatch(userLogin.request());
   }, [dispatch]);
 
   const handleNoteAdd = useCallback(
     (text: string) => {
-      dispatch(actions.NOTE_ADD_REQUEST(text));
+      dispatch(noteAdd.request(text));
       setDialogType(DialogType.NONE);
     },
     [dispatch],
@@ -43,7 +43,7 @@ const Index: NextPage<Props> = () => {
   const handleNoteUpdate = useCallback(
     (text: string) => {
       if (currentNote) {
-        dispatch(actions.NOTE_UPDATE_REQUEST(currentNote.id, text));
+        dispatch(noteUpdate.request(currentNote.id, text));
         setDialogType(DialogType.NONE);
       }
     },
@@ -65,7 +65,7 @@ const Index: NextPage<Props> = () => {
 
   const handleNoteRemove = useCallback(
     (noteId: string) => {
-      dispatch(actions.NOTE_REMOVE_REQUEST(noteId));
+      dispatch(noteRemove.request(noteId));
     },
     [dispatch],
   );

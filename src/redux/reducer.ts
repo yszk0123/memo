@@ -1,33 +1,28 @@
-import { ValueOf } from '../types/CommonType';
-import { createReducer } from '../types/ReduxType';
+import { createReducer } from 'typesafe-actions';
 import { State } from '../types/StateType';
-import { Action, ActionType } from './actions';
+import { noteAdd, noteGetAll, noteRemove, noteUpdate, userLogin, userLogout } from './actions';
 
-const initialState: State = {
+export const reducer = createReducer<State>({
   user: null,
   notes: [],
-};
-
-export const reducer = createReducer<State, ActionType, ValueOf<Action>>(initialState, {
-  [ActionType.USER_LOGIN_SUCCESS](state, { payload: { user } }) {
+})
+  .handleAction(userLogin.success, (state, { payload: { user } }) => {
     return { ...state, user };
-  },
-  [ActionType.USER_LOGOUT_SUCCESS](state) {
+  })
+  .handleAction(userLogout.success, state => {
     return { ...state, user: null };
-  },
-
-  [ActionType.NOTE_GET_ALL_SUCCESS](state, { payload: { notes } }) {
+  })
+  .handleAction(noteGetAll.success, (state, { payload: { notes } }) => {
     return { ...state, notes };
-  },
-  [ActionType.NOTE_ADD_SUCCESS](state, { payload: { note } }) {
+  })
+  .handleAction(noteAdd.success, (state, { payload: { note } }) => {
     return { ...state, notes: [note, ...state.notes] };
-  },
-  [ActionType.NOTE_UPDATE_SUCCESS](state, { payload: { note } }) {
+  })
+  .handleAction(noteUpdate.success, (state, { payload: { note } }) => {
     const notes = state.notes.map(old => (old.id === note.id ? note : old));
     return { ...state, notes };
-  },
-  [ActionType.NOTE_REMOVE_SUCCESS](state, { payload: { noteId } }) {
+  })
+  .handleAction(noteRemove.success, (state, { payload: { noteId } }) => {
     const notes = state.notes.filter(note => note.id !== noteId);
     return { ...state, notes };
-  },
-});
+  });

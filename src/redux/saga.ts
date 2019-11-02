@@ -14,7 +14,7 @@ import {
 import { firebase, GoogleAuthProvider } from '../firebase';
 import { createNote, Note } from '../types/NoteType';
 import { User } from '../types/UserType';
-import { Action, actions, ActionType } from './actions';
+import { noteAdd, noteGetAll, noteRemove, noteUpdate, userLogin, userLogout } from './actions';
 import { selectors } from './selectors';
 
 type EmptyUser = { _: 'EmptyUser' };
@@ -55,10 +55,10 @@ function* watchUserStatusChangeSaga(): SagaIterator {
       const rawUser = yield take(chan);
       if (rawUser !== emptyUser) {
         const user = toUser(rawUser);
-        yield put(actions.USER_LOGIN_SUCCESS(user));
-        yield put(actions.NOTE_GET_ALL_REQUEST());
+        yield put(userLogin.success(user));
+        yield put(noteGetAll.request());
       } else {
-        yield put(actions.USER_LOGOUT_SUCCESS());
+        yield put(userLogout.success());
       }
     }
   } finally {
@@ -70,7 +70,7 @@ function* watchUserStatusChangeSaga(): SagaIterator {
 
 function* noteAddSaga({
   payload: { text },
-}: Action[ActionType.NOTE_ADD_REQUEST]): SagaIterator<void> {
+}: ReturnType<typeof noteAdd.request>): SagaIterator<void> {
   const user: User | null = yield select(selectors.user);
   if (user === null) {
     return;
@@ -80,12 +80,12 @@ function* noteAddSaga({
   const noteRef = db.collection('notes').doc();
   const note = yield call(createNote, noteRef, user.id, text);
   yield call([noteRef, noteRef.set], note);
-  yield put(actions.NOTE_ADD_SUCCESS(note));
+  yield put(noteAdd.success(note));
 }
 
 function* noteUpdateSaga({
   payload: { noteId, text },
-}: Action[ActionType.NOTE_UPDATE_REQUEST]): SagaIterator<void> {
+}: ReturnType<typeof noteUpdate.request>): SagaIterator<void> {
   const user: User | null = yield select(selectors.user);
   if (user === null) {
     return;
@@ -96,12 +96,12 @@ function* noteUpdateSaga({
   yield call([noteRef, noteRef.update], 'text', text);
   const newNoteRef = yield call([noteRef, noteRef.get]);
   const newNote = yield call([newNoteRef, newNoteRef.data]);
-  yield put(actions.NOTE_UPDATE_SUCCESS(newNote));
+  yield put(noteUpdate.success(newNote));
 }
 
 function* noteRemoveSaga({
   payload: { noteId },
-}: Action[ActionType.NOTE_REMOVE_REQUEST]): SagaIterator<void> {
+}: ReturnType<typeof noteRemove.request>): SagaIterator<void> {
   const user: User | null = yield select(selectors.user);
   if (user === null) {
     return;
@@ -110,10 +110,10 @@ function* noteRemoveSaga({
   const db = firebase.firestore();
   const noteRef = db.collection('notes').doc(noteId);
   yield call([noteRef, noteRef.delete]);
-  yield put(actions.NOTE_REMOVE_SUCCESS(noteId));
+  yield put(noteRemove.success(noteId));
 }
 
-function* noteGetAllSaga(_: Action[ActionType.NOTE_GET_ALL_REQUEST]): SagaIterator<void> {
+function* noteGetAllSaga(): SagaIterator<void> {
   const user: User | null = yield select(selectors.user);
   if (user === null) {
     return;
@@ -126,17 +126,17 @@ function* noteGetAllSaga(_: Action[ActionType.NOTE_GET_ALL_REQUEST]): SagaIterat
     .orderBy('createdAt', 'desc');
   const snapshot: firebase.firestore.QuerySnapshot = yield call([notesRef, notesRef.get]);
   const notes = getAll<Note>(snapshot);
-  yield put(actions.NOTE_GET_ALL_SUCCESS(notes));
+  yield put(noteGetAll.success(notes));
 }
 
 export function* saga(): SagaIterator {
   yield all([
-    takeLatest(ActionType.USER_LOGIN_REQUEST, userLoginSaga),
-    takeLatest(ActionType.USER_LOGOUT_REQUEST, userLogoutSaga),
-    takeLatest(ActionType.NOTE_GET_ALL_REQUEST, noteGetAllSaga),
-    takeEvery(ActionType.NOTE_ADD_REQUEST, noteAddSaga),
-    takeEvery(ActionType.NOTE_UPDATE_REQUEST, noteUpdateSaga),
-    takeEvery(ActionType.NOTE_REMOVE_REQUEST, noteRemoveSaga),
+    takeLatest(userLogin.request, userLoginSaga),
+    takeLatest(userLogout.request, userLogoutSaga),
+    takeLatest(noteGetAll.request, noteGetAllSaga),
+    takeEvery(noteAdd.request, noteAddSaga),
+    takeEvery(noteUpdate.request, noteUpdateSaga),
+    takeEvery(noteRemove.request, noteRemoveSaga),
     fork(watchUserStatusChangeSaga),
   ]);
 }

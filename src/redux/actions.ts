@@ -1,51 +1,34 @@
-import { ReturnTypes } from '../types/CommonType';
+import { createAsyncAction } from 'typesafe-actions';
 import { Note } from '../types/NoteType';
-import { createActionCreators } from '../types/ReduxType';
 import { User } from '../types/UserType';
 
-export enum ActionType {
-  USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST',
-  USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS',
-  USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST',
-  USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS',
-  NOTE_REMOVE_REQUEST = 'NOTE_REMOVE_REQUEST',
-  NOTE_REMOVE_SUCCESS = 'NOTE_REMOVE_SUCCESS',
-  NOTE_UPDATE_REQUEST = 'NOTE_UPDATE_REQUEST',
-  NOTE_UPDATE_SUCCESS = 'NOTE_UPDATE_SUCCESS',
-  NOTE_GET_ALL_REQUEST = 'NOTE_GET_ALL_REQUEST',
-  NOTE_GET_ALL_SUCCESS = 'NOTE_GET_ALL_SUCCESS',
-  NOTE_ADD_REQUEST = 'NOTE_ADD_REQUEST',
-  NOTE_ADD_SUCCESS = 'NOTE_ADD_SUCCESS',
-}
-
-export const actions = createActionCreators<ActionType>()({
-  NOTE_ADD_REQUEST: (text: string) => ({ type: ActionType.NOTE_ADD_REQUEST, payload: { text } }),
-  NOTE_ADD_SUCCESS: (note: Note) => ({ type: ActionType.NOTE_ADD_SUCCESS, payload: { note } }),
-  NOTE_REMOVE_REQUEST: (noteId: string) => ({
-    type: ActionType.NOTE_REMOVE_REQUEST,
-    payload: { noteId },
-  }),
-  NOTE_REMOVE_SUCCESS: (noteId: string) => ({
-    type: ActionType.NOTE_REMOVE_SUCCESS,
-    payload: { noteId },
-  }),
-  NOTE_UPDATE_REQUEST: (noteId: string, text: string) => ({
-    type: ActionType.NOTE_UPDATE_REQUEST,
-    payload: { noteId, text },
-  }),
-  NOTE_UPDATE_SUCCESS: (note: Note) => ({
-    type: ActionType.NOTE_UPDATE_SUCCESS,
-    payload: { note },
-  }),
-  USER_LOGIN_REQUEST: () => ({ type: ActionType.USER_LOGIN_REQUEST }),
-  USER_LOGIN_SUCCESS: (user: User) => ({ type: ActionType.USER_LOGIN_SUCCESS, payload: { user } }),
-  USER_LOGOUT_REQUEST: () => ({ type: ActionType.USER_LOGOUT_REQUEST }),
-  USER_LOGOUT_SUCCESS: () => ({ type: ActionType.USER_LOGOUT_SUCCESS }),
-  NOTE_GET_ALL_REQUEST: () => ({ type: ActionType.NOTE_GET_ALL_REQUEST }),
-  NOTE_GET_ALL_SUCCESS: (notes: Note[]) => ({
-    type: ActionType.NOTE_GET_ALL_SUCCESS,
-    payload: { notes },
-  }),
-});
-
-export type Action = ReturnTypes<typeof actions>;
+export const userLogin = createAsyncAction(
+  ['user/login/request', undefined],
+  ['user/login/success', (user: User) => ({ user })],
+  ['user/login/failure', undefined],
+)();
+export const userLogout = createAsyncAction(
+  ['user/logout/request', undefined],
+  ['user/logout/success', undefined],
+  ['user/logout/failure', undefined],
+)();
+export const noteRemove = createAsyncAction(
+  ['note/remove/request', (noteId: string) => ({ noteId })],
+  ['note/remove/success', (noteId: string) => ({ noteId })],
+  ['note/remove/failure', undefined],
+)();
+export const noteAdd = createAsyncAction(
+  ['note/add/request', (text: string) => ({ text })],
+  ['note/add/success', (note: Note) => ({ note })],
+  ['note/add/failure', undefined],
+)();
+export const noteUpdate = createAsyncAction(
+  ['note/update/request', (noteId: string, text: string) => ({ noteId, text })],
+  ['note/update/success', (note: Note) => ({ note })],
+  ['note/update/failure', undefined],
+)();
+export const noteGetAll = createAsyncAction(
+  ['note/getAll/request', undefined],
+  ['note/getAll/success', (notes: Note[]) => ({ notes })],
+  ['note/getAll/failure', undefined],
+)();
