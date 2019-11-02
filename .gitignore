@@ -1,4 +1,5 @@
-build/
+.next/
+dist/
 node_modules/
 
 *.log
