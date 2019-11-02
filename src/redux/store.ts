@@ -4,7 +4,10 @@ import { reducer } from './reducer';
 import { saga } from './saga';
 
 export function createStore() {
-  const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const composeEnhancers =
+    typeof window !== 'undefined'
+      ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+      : compose;
   const sagaMiddleware = createSagaMiddleware();
   const store = createReduxStore(reducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
 

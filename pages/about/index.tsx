@@ -1,20 +1,17 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
+import { AppLayout } from '../../src/components/organisms/AppLayout';
 
 interface Props {}
 
-const About: NextPage<Props> = ({}) => {
+const About: NextPage<Props> = () => {
   return (
-    <>
+    <AppLayout user={null}>
       <Link href="/">
         <a>Home</a>
       </Link>
-    </>
+    </AppLayout>
   );
-};
-
-About.getInitialProps = async ({}) => {
-  return {};
 };
 
 export default About;

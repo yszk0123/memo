@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebaseNamespace from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
@@ -12,6 +12,13 @@ const firebaseConfig = {
   appId: '1:61000756567:web:5d923c067f28d0ab8c6212',
 };
 
-firebase.initializeApp(firebaseConfig);
+/**
+ * Prevent the "Firebase App named '[DEFAULT]' already exists (app/duplicate-app)" error
+ * @see https://github.com/zeit/next.js/issues/1999#issuecomment-326805233
+ */
+export const firebase =
+  firebaseNamespace.apps.length === 0
+    ? firebaseNamespace.initializeApp(firebaseConfig)
+    : firebaseNamespace.app();
 
-export { firebase };
+export const GoogleAuthProvider = firebaseNamespace.auth.GoogleAuthProvider;

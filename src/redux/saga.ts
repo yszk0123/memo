@@ -11,7 +11,7 @@ import {
   takeEvery,
   takeLatest,
 } from 'redux-saga/effects';
-import { firebase } from '../firebase';
+import { firebase, GoogleAuthProvider } from '../firebase';
 import { createNote, Note } from '../types/NoteType';
 import { User } from '../types/UserType';
 import { Action, actions, ActionType } from './actions';
@@ -34,7 +34,7 @@ function onAuthStateChangedEffect(): CallEffect<EventChannel<firebase.User | Emp
 }
 
 function* userLoginSaga(): SagaIterator {
-  const provider = new firebase.auth.GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
   const auth = firebase.auth();
   yield call([auth, auth.signInWithRedirect], provider);
 }
