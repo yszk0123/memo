@@ -18,7 +18,8 @@
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
     "redux-saga": "^1.1.1",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "styled-components": "^4.4.1"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
@@ -28,6 +29,9 @@
     "@types/react-dom": "^16.9.2",
     "@types/react-redux": "^7.1.5",
     "@types/shortid": "^0.0.29",
+    "@types/styled-components": "^4.1.20",
+    "@types/styled-jsx": "^2.2.8",
+    "babel-plugin-styled-components": "^1.10.6",
     "prettier": "^1.18.2",
     "typescript": "^3.6.4"
   },

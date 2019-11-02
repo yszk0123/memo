@@ -1,14 +1,5 @@
-import classNames from 'classnames';
-import React, { HTMLProps } from 'react';
+import styled from 'styled-components';
 
-interface Props extends HTMLProps<HTMLInputElement> {
-  className?: string;
-}
-
-export const TextInput: React.FunctionComponent<Props> = ({ className, children, ...props }) => {
-  return (
-    <input {...props} className={classNames('TextInput', className)}>
-      {children}
-    </input>
-  );
-};
+export const TextInput = styled.input`
+  width: 100%;
+`;

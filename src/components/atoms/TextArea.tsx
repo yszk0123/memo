@@ -1,14 +1,5 @@
-import classNames from 'classnames';
-import React, { HTMLProps } from 'react';
+import styled from 'styled-components';
 
-interface Props extends HTMLProps<HTMLTextAreaElement> {
-  className?: string;
-}
-
-export const TextArea: React.FunctionComponent<Props> = ({ className, children, ...props }) => {
-  return (
-    <textarea {...props} className={classNames('TextArea', className)}>
-      {children}
-    </textarea>
-  );
-};
+export const TextArea = styled.textarea`
+  width: 100%;
+`;

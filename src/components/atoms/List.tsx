@@ -1,14 +1,12 @@
-import classNames from 'classnames';
-import React, { HTMLProps } from 'react';
+import { HTMLProps } from 'react';
+import styled from 'styled-components';
 
 interface Props extends HTMLProps<HTMLInputElement> {
   className?: string;
 }
 
-export const List: React.FunctionComponent<Props> = ({ className, children, ...props }) => {
-  return (
-    <div {...props} className={classNames('List', className)}>
-      {children}
-    </div>
-  );
-};
+export const List = styled.div<Props>`
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-default);
+`;
