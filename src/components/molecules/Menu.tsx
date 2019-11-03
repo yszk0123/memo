@@ -7,10 +7,10 @@ import { Position } from '../../types/GeometoryType';
 import { Paper } from '../atoms/Paper';
 
 export enum MenuPlacement {
-  LEFT_TOP,
-  LEFT_BOTTOM,
-  RIGHT_TOP,
-  RIGHT_BOTTOM,
+  LEFT_TOP = 'LEFT_TOP',
+  LEFT_BOTTOM = 'LEFT_BOTTOM',
+  RIGHT_TOP = 'RIGHT_TOP',
+  RIGHT_BOTTOM = 'RIGHT_BOTTOM',
 }
 
 const stop = (event: React.SyntheticEvent): void => {
@@ -77,29 +77,21 @@ const BareMenu: React.FunctionComponent<Props> = ({
   onClose,
   ...props
 }) => {
-  const bottom =
-    placement === MenuPlacement.RIGHT_BOTTOM || placement === MenuPlacement.LEFT_BOTTOM;
-  const right = placement === MenuPlacement.RIGHT_BOTTOM || placement === MenuPlacement.RIGHT_TOP;
   const style = useMemo(() => {
-    if (position === null) {
-      return undefined;
-    }
-
-    const s: React.CSSProperties = { left: position.x, top: position.y };
-    if (!bottom) {
-      s.marginBottom = 0;
-    }
-    if (!right) {
-      s.marginRight = 0;
-    }
-    return s;
-  }, [position, right, bottom]);
+    return position !== null ? { left: position.x, top: position.y } : undefined;
+  }, [position]);
 
   return ReactDOM.createPortal(
     <>
       {isOpen && <Sheet onClick={onClose} />}
       <MainWrapper
-        className={classNames({ hidden: !isOpen, left: !right, top: !bottom, right, bottom })}
+        className={classNames({
+          hidden: !isOpen,
+          leftTop: placement === MenuPlacement.LEFT_TOP,
+          leftBottom: placement === MenuPlacement.LEFT_BOTTOM,
+          rightTop: placement === MenuPlacement.RIGHT_TOP,
+          rightBottom: placement === MenuPlacement.RIGHT_BOTTOM,
+        })}
         style={style}
         onClick={stop}
       >
@@ -125,19 +117,30 @@ const MainWrapper = styled(Paper)`
   transition: transform var(--transition), opacity var(--transition);
   opacity: 1;
   pointer-events: auto;
-  transform: translate(0, 0);
 
-  &.left.hidden {
-    transform: translateX(var(--menu-offset-x));
+  &.leftTop {
+    transform: translate(-100%, -100%);
+    &.hidden {
+      transform: translate(calc(var(--menu-offset-x) - 100%), calc(var(--menu-offset-y) - 100%));
+    }
   }
-  &.right.hidden {
-    transform: translateX(calc(-1 * var(--menu-offset-x)));
+  &.leftBottom {
+    transform: translate(-100%, 0);
+    &.hidden {
+      transform: translate(calc(var(--menu-offset-x) - 100%), calc(-1 * var(--menu-offset-y)));
+    }
   }
-  &.top.hidden {
-    transform: translateY(var(--menu-offset-y));
+  &.rightTop {
+    transform: translate(0, -100%);
+    &.hidden {
+      transform: translate(calc(-1 * var(--menu-offset-x)), calc(var(--menu-offset-y) - 100%));
+    }
   }
-  &.bottom.hidden {
-    transform: translateY(calc(-1 * var(--menu-offset-y)));
+  &.rightBottom {
+    transform: translate(0, 0);
+    &.hidden {
+      transform: translate(calc(-1 * var(--menu-offset-x)), calc(-1 * var(--menu-offset-y)));
+    }
   }
 
   &.hidden {

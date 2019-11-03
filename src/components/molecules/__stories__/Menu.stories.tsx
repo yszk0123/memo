@@ -9,7 +9,6 @@ export default {
 };
 
 export const MenuStory: React.FunctionComponent = () => {
-  const menuState = useMenuState();
   const placement = select(
     'placement',
     {
@@ -17,19 +16,18 @@ export const MenuStory: React.FunctionComponent = () => {
       LeftBottom: MenuPlacement.LEFT_BOTTOM,
       RightTop: MenuPlacement.RIGHT_TOP,
       RightBottom: MenuPlacement.RIGHT_BOTTOM,
-      None: null,
     },
-    null,
-    'group',
+    MenuPlacement.RIGHT_BOTTOM,
   );
+  const menuState = useMenuState();
 
   return (
-    <>
+    <div>
       <SecondaryBox onClick={menuState.onOpen} />
       <Menu placement={placement !== null ? placement : undefined} state={menuState}>
-        <PrimaryBox>{placement ? MenuPlacement[placement] : 'NONE'}</PrimaryBox>
+        <PrimaryBox>{placement}</PrimaryBox>
       </Menu>
-    </>
+    </div>
   );
 };
 
