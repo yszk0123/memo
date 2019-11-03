@@ -7,7 +7,7 @@ export default {
   title: 'core/Layout',
 };
 
-export const LayoutStory = () => {
+export const LayoutStory: React.FunctionComponent = () => {
   return (
     <Layout user={null} onLogin={action('onLogin')} onLogout={action('onLogout')}>
       Content

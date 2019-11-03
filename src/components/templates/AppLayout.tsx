@@ -14,5 +14,9 @@ export const AppLayout: React.FunctionComponent<Props> = ({ children }) => {
 
   useUserStatusSubscribe();
 
-  return <Layout user={user} onLogin={userLogin} onLogout={userLogout} />;
+  return (
+    <Layout user={user} onLogin={userLogin} onLogout={userLogout}>
+      {children}
+    </Layout>
+  );
 };

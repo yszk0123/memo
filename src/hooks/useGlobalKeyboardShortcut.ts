@@ -1,16 +1,14 @@
 import { useCallback } from 'react';
 
-import { Dispatch } from '../types/ReduxType';
 import { KeyCode } from '../utils/Keyboard';
 import { useGlobalKeyboard } from './useGlobalKeyboard';
 
 interface Options {
-  dispatch: Dispatch;
   onAdd: () => void;
   onSave: () => void;
 }
 
-export function useGlobalKeyboardShortcut({ dispatch, onAdd, onSave }: Options) {
+export function useGlobalKeyboardShortcut({ onAdd, onSave }: Options): void {
   const onKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.code === KeyCode.KEY_A) {

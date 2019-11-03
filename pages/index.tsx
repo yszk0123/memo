@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { PrimaryFab } from '../src/components/atoms/Fab';
@@ -16,7 +15,6 @@ import { noop } from '../src/utils/noop';
 interface Props {}
 
 const Index: NextPage<Props> = () => {
-  const dispatch = useDispatch();
   const notes = useTypedSelector(selectors.notes);
   const isLoading = useTypedSelector(selectors.isLoading);
   const noteRemove = useNoteRemove();
@@ -27,7 +25,6 @@ const Index: NextPage<Props> = () => {
   }, [noteGetAll]);
 
   useGlobalKeyboardShortcut({
-    dispatch,
     onAdd: noop,
     onSave: noop,
   });

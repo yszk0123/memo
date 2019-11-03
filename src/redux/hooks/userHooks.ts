@@ -9,7 +9,7 @@ function toUser(user: firebase.User): User {
   return { id: user.uid, displayName: user.displayName };
 }
 
-export function useUserStatusSubscribe() {
+export function useUserStatusSubscribe(): void {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export function useUserStatusSubscribe() {
   }, [dispatch]);
 }
 
-export function useUserLogin() {
+export function useUserLogin(): () => void {
   const dispatch = useDispatch();
 
   return useCallback(() => {
@@ -37,7 +37,7 @@ export function useUserLogin() {
   }, [dispatch]);
 }
 
-export function useUserLogout() {
+export function useUserLogout(): () => Promise<void> {
   const dispatch = useDispatch();
 
   return useCallback(async () => {

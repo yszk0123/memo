@@ -11,10 +11,12 @@ interface Props {
   className?: string;
   style?: React.CSSProperties;
   note: Note;
+
+  // FIXME: Implement with Menu component
   onRemove: (noteId: string) => void;
 }
 
-export const NoteView: React.FunctionComponent<Props> = ({ className, style, note, onRemove }) => {
+export const NoteView: React.FunctionComponent<Props> = ({ className, style, note }) => {
   const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
 
   return (

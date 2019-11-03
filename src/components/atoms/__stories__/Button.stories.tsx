@@ -7,14 +7,14 @@ export default {
   title: 'atoms/Button',
 };
 
-export const DefaultButtonStory = () => (
+export const DefaultButtonStory: React.FunctionComponent = () => (
   <DefaultButton onClick={action('clicked')}>Button</DefaultButton>
 );
 
-export const PrimaryButtonStory = () => (
+export const PrimaryButtonStory: React.FunctionComponent = () => (
   <PrimaryButton onClick={action('clicked')}>Button</PrimaryButton>
 );
 
-export const SecondaryButtonStory = () => (
+export const SecondaryButtonStory: React.FunctionComponent = () => (
   <SecondaryButton onClick={action('clicked')}>Button</SecondaryButton>
 );

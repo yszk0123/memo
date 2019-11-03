@@ -7,9 +7,9 @@ export default {
   title: 'atoms/Paper',
 };
 
-export const PaperStory = () => <Paper>Paper</Paper>;
+export const PaperStory: React.FunctionComponent = () => <Paper>Paper</Paper>;
 
-export const PaperWithStyleStory = () => <StyledPaper>Paper</StyledPaper>;
+export const PaperWithStyleStory: React.FunctionComponent = () => <StyledPaper>Paper</StyledPaper>;
 
 const StyledPaper = styled(Paper)`
   margin: var(--space);

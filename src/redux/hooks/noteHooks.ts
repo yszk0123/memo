@@ -12,7 +12,7 @@ import { unwrapDocumentData } from '../utils/unwrapDocumentData';
 
 const LIMIT = 20;
 
-export function useNoteAdd() {
+export function useNoteAdd(): (text: string) => void {
   const dispatch = useDispatch();
   const user = useTypedSelector(selectors.user);
 
@@ -35,7 +35,7 @@ export function useNoteAdd() {
   );
 }
 
-export function useNoteUpdate() {
+export function useNoteUpdate(): (noteId: string, text: string) => void {
   const dispatch = useDispatch();
   const user = useTypedSelector(selectors.user);
 
@@ -63,7 +63,7 @@ export function useNoteUpdate() {
   );
 }
 
-export function useNoteRemove() {
+export function useNoteRemove(): (noteId: string) => void {
   const dispatch = useDispatch();
   const user = useTypedSelector(selectors.user);
 
@@ -88,7 +88,7 @@ export function useNoteRemove() {
   );
 }
 
-export function useNoteGet() {
+export function useNoteGet(): (noteId: string) => void {
   const dispatch = useDispatch();
   const user = useTypedSelector(selectors.user);
 
@@ -120,7 +120,7 @@ export function useNoteGet() {
 
 type Cursor = firebase.firestore.QueryDocumentSnapshot;
 
-export function useNoteGetAll() {
+export function useNoteGetAll(): () => Promise<void> {
   const dispatch = useDispatch();
   const user = useTypedSelector(selectors.user);
   const cursorRef = useRef<Cursor | null>(null);
@@ -141,9 +141,11 @@ export function useNoteGetAll() {
     if (cursorRef.current !== null) {
       notesRef = notesRef.startAfter(cursorRef.current);
     }
+    // Store original reference before calling async functions
+    const ref = cursorRef;
     const snapshot: firebase.firestore.QuerySnapshot = await notesRef.get();
     const notes = getAllFromSnapshot<Note>(snapshot);
-    cursorRef.current = snapshot.docs[snapshot.docs.length - 1] || null;
+    ref.current = snapshot.docs[snapshot.docs.length - 1] || null;
 
     dispatch(noteGetAll.success(notes));
   }, [user, dispatch]);
@@ -152,11 +154,11 @@ export function useNoteGetAll() {
 /**
  * Pagination is not implemented...
  */
-export function useNoteSubscribeAll() {
+export function useNoteSubscribeAll(): void {
   const dispatch = useDispatch();
   const user = useTypedSelector(selectors.user);
 
-  return useEffect(() => {
+  useEffect(() => {
     if (user === null) {
       return;
     }
