@@ -1,0 +1,40 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "[typescript]": {
+      "editor.formatOnSave": false,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+      "editor.formatOnSave": false,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": false
+    },
+    "eslint.enable": true,
+    "eslint.packageManager": "yarn",
+    "eslint.workingDirectories": ["./workspaces/client"],
+
+    // editor.formatOnSave conflict with eslint.autoFixOnSave
+    // @see https://github.com/prettier/prettier-vscode/issues/315
+    // @see https://qiita.com/madono/items/a134e904e891c5cb1d20
+    "eslint.autoFixOnSave": true,
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      {"language": "typescript", "autoFix": true },
+      {"language": "typescriptreact", "autoFix": true }
+    ]
+  }
+}
