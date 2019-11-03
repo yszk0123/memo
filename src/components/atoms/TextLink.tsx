@@ -1,12 +1,14 @@
-import NextLink, { LinkProps } from 'next/link';
+import { LinkProps } from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
+import { PrefixedLink } from './PrefixedLink';
+
 export const TextLink: React.FunctionComponent<LinkProps> = ({ children, ...props }) => {
   return (
-    <NextLink {...props}>
+    <PrefixedLink {...props}>
       <Text>{children}</Text>
-    </NextLink>
+    </PrefixedLink>
   );
 };
 
@@ -21,9 +23,9 @@ const Text = styled.p`
 
 export const HeadingLink: React.FunctionComponent<LinkProps> = ({ children, ...props }) => {
   return (
-    <NextLink {...props}>
+    <PrefixedLink {...props}>
       <Heading>{children}</Heading>
-    </NextLink>
+    </PrefixedLink>
   );
 };
 
