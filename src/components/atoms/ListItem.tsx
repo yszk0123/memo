@@ -6,6 +6,8 @@ interface Props extends HTMLProps<HTMLInputElement> {
 }
 
 export const ListItem = styled.div<Props>`
+  transition: background-color var(--transition);
+
   &:hover {
     background-color: var(--color-default--hover);
   }

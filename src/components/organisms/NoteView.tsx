@@ -1,27 +1,19 @@
+import Link from 'next/link';
 import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { Note } from '../../types/NoteType';
 import { SecondaryButton } from '../atoms/Button';
+import { LineBreakableText } from '../atoms/LineBreakableText';
 import { ListItem } from '../atoms/ListItem';
 
 interface Props {
   className?: string;
   note: Note;
-  onClick: (note: Note) => void;
   onRemove: (noteId: string) => void;
 }
 
-export const NoteView: React.FunctionComponent<Props> = ({
-  className,
-  note,
-  onClick,
-  onRemove,
-}) => {
+export const NoteView: React.FunctionComponent<Props> = ({ className, note, onRemove }) => {
   const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
-
-  const handleClick = useCallback(() => {
-    onClick(note);
-  }, [note, onClick]);
 
   const handleRemove = useCallback(
     (event: React.MouseEvent) => {
@@ -33,13 +25,17 @@ export const NoteView: React.FunctionComponent<Props> = ({
   );
 
   return (
-    <Container className={className} onClick={handleClick}>
-      <Content>
-        <Text>{note.text}</Text>
-        <CreatedAt>{createdAt}</CreatedAt>
-      </Content>
-      <RemoveButton onClick={handleRemove}>Remove</RemoveButton>
-    </Container>
+    <Link href="/notes/[id]" as={`/notes/${note.id}`}>
+      <Container className={className}>
+        <Content>
+          <Text>
+            <LineBreakableText text={note.text} />
+          </Text>
+          <CreatedAt>{createdAt}</CreatedAt>
+        </Content>
+        <RemoveButton onClick={handleRemove}>Remove</RemoveButton>
+      </Container>
+    </Link>
   );
 };
 
@@ -48,6 +44,7 @@ const Container = styled(ListItem)`
   align-items: center;
   padding: var(--space);
   justify-content: space-between;
+  cursor: pointer;
 `;
 
 const Content = styled(ListItem)`

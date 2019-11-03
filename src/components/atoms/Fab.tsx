@@ -4,7 +4,7 @@ import styled from 'styled-components';
 interface Props {
   className?: string;
   disabled?: boolean;
-  onClick: (event: React.MouseEvent) => void;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
 const Fab = styled.button<Props>`
@@ -14,6 +14,9 @@ const Fab = styled.button<Props>`
   border-width: var(--border-width);
   border-radius: 50%;
   box-shadow: 0 2px 2px 1px var(--color-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     cursor: pointer;

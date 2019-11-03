@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { noop } from '../../utils/noop';
 import { DefaultButton, PrimaryButton } from '../atoms/Button';
 import { TextArea } from '../atoms/TextArea';
 import { Dialog, DialogActions, DialogContent } from '../molecules/Dialog';
@@ -35,7 +37,10 @@ export const NoteAddDialog: React.FunctionComponent<Props> = ({
         <ContentText value={text} onChange={handleChange} />
       </Content>
       <Actions>
-        <CancelButton onClick={onCancel}>Cancel</CancelButton>
+        <Link href="/">
+          <CancelButton onClick={noop}>Cancel</CancelButton>
+        </Link>
+        <CancelButton onClick={onCancel}>Cancel (OLD)</CancelButton>
         <AddButton disabled={disabled} onClick={handleSubmit}>
           Add
         </AddButton>

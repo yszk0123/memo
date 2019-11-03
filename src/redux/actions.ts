@@ -27,6 +27,11 @@ export const noteUpdate = createAsyncAction(
   ['note/update/success', (note: Note) => ({ note })],
   ['note/update/failure', undefined],
 )();
+export const noteGet = createAsyncAction(
+  ['note/get/request', undefined],
+  ['note/get/success', (note: Note) => ({ note })],
+  ['note/get/failure', undefined],
+)();
 export const noteGetAll = createAsyncAction(
   ['note/getAll/request', undefined],
   ['note/getAll/success', (notes: Note[]) => ({ notes })],
