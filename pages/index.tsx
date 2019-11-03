@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
+import Link from 'next/link';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { PrimaryFab } from '../src/components/atoms/Fab';
-import { PrefixedLink } from '../src/components/atoms/PrefixedLink';
 import { NoteList } from '../src/components/organisms/NoteList';
 import { AppLayout } from '../src/components/templates/AppLayout';
 import { useGlobalKeyboardShortcut } from '../src/hooks/useGlobalKeyboardShortcut';
@@ -33,9 +33,9 @@ const Index: NextPage<Props> = () => {
     <AppLayout>
       <NoteList notes={notes} onFetchMore={noteGetAll} onRemove={noteRemove} />
       <Loading className={isLoading ? 'visible' : undefined}>Loading</Loading>
-      <PrefixedLink href="/notes">
+      <Link href="/notes">
         <AddFab>Add</AddFab>
-      </PrefixedLink>
+      </Link>
     </AppLayout>
   );
 };

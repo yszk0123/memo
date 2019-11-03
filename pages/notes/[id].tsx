@@ -30,7 +30,7 @@ const NotesShow: NextPage<Props> = () => {
   const handleNoteRemove = useCallback(() => {
     if (noteId !== null) {
       noteRemove(noteId);
-      router.push('/', `${process.env.REACT_APP_URL_PREFIX}`);
+      router.push('/');
     }
   }, [noteId, noteRemove, router]);
 

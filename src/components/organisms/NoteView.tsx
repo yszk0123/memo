@@ -1,10 +1,10 @@
+import Link from 'next/link';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { Note } from '../../types/NoteType';
 import { LineBreakableText } from '../atoms/LineBreakableText';
 import { ListItem } from '../atoms/ListItem';
-import { PrefixedLink } from '../atoms/PrefixedLink';
 import { pad2 } from './pad2';
 
 interface Props {
@@ -20,7 +20,7 @@ export const NoteView: React.FunctionComponent<Props> = ({ className, style, not
   const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
 
   return (
-    <PrefixedLink as={`/notes/${note.id}`} href="/notes/[id]">
+    <Link as={`/notes/${note.id}`} href="/notes/[id]">
       <Container className={className} style={style}>
         <Content>
           <Text>
@@ -29,7 +29,7 @@ export const NoteView: React.FunctionComponent<Props> = ({ className, style, not
           <CreatedAt>{createdAt}</CreatedAt>
         </Content>
       </Container>
-    </PrefixedLink>
+    </Link>
   );
 };
 

@@ -15,7 +15,7 @@ const NotesCreate: NextPage<Props> = () => {
   const handleNoteAdd = useCallback(
     (text: string) => {
       noteAdd(text);
-      router.push('/', `${process.env.REACT_APP_URL_PREFIX}`);
+      router.push('/');
     },
     [noteAdd, router],
   );
