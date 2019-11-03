@@ -1,7 +1,9 @@
 import { NextPage } from 'next';
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import { PrimaryButton } from '../src/components/atoms/Button';
+import { PrimaryFab } from '../src/components/atoms/Fab';
 import { AppLayout } from '../src/components/organisms/AppLayout';
 import { NoteAddDialog } from '../src/components/organisms/NoteAddDialog';
 import { NoteList } from '../src/components/organisms/NoteList';
@@ -107,9 +109,15 @@ const Index: NextPage<Props> = () => {
           onCancel={handleCancel}
         />
       )}
-      <PrimaryButton onClick={handleOpenAdd}>Add</PrimaryButton>
+      <AddFab onClick={handleOpenAdd}>Add</AddFab>
     </AppLayout>
   );
 };
+
+const AddFab = styled(PrimaryFab)`
+  position: fixed;
+  right: calc(var(--space) * 2);
+  bottom: calc(var(--space) * 2);
+`;
 
 export default Index;

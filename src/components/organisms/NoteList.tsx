@@ -1,23 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Note } from '../../types/NoteType';
-import { List } from '../atoms/List';
+import { VirtualList } from '../molecules/VirtualList';
 import { NoteView } from './NoteView';
 
+const ITEM_SIZE = 80;
+
 interface Props {
+  className?: string;
   notes: Note[];
   onClick: (note: Note) => void;
   onRemove: (noteId: string) => void;
 }
 
-export const NoteList: React.FunctionComponent<Props> = ({ notes, onClick, onRemove }) => {
+export const NoteList: React.FunctionComponent<Props> = ({
+  className,
+  notes,
+  onClick,
+  onRemove,
+}) => {
   return (
-    <Container>
-      {notes.map(note => {
-        return <NoteView key={note.id} note={note} onClick={onClick} onRemove={onRemove} />;
-      })}
-    </Container>
+    <VirtualList
+      className={className}
+      items={notes}
+      itemSize={ITEM_SIZE}
+      renderItem={note => {
+        return <Item key={note.id} note={note} onClick={onClick} onRemove={onRemove} />;
+      }}
+      onFetchMore={() => {
+        console.log('BOTTOM');
+      }}
+    />
   );
 };
 
-const Container = styled(List)``;
+const Item = styled(NoteView)`
+  height: ${ITEM_SIZE}px;
+`;

@@ -5,12 +5,18 @@ import { SecondaryButton } from '../atoms/Button';
 import { ListItem } from '../atoms/ListItem';
 
 interface Props {
+  className?: string;
   note: Note;
   onClick: (note: Note) => void;
   onRemove: (noteId: string) => void;
 }
 
-export const NoteView: React.FunctionComponent<Props> = ({ note, onClick, onRemove }) => {
+export const NoteView: React.FunctionComponent<Props> = ({
+  className,
+  note,
+  onClick,
+  onRemove,
+}) => {
   const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
 
   const handleClick = useCallback(() => {
@@ -27,9 +33,11 @@ export const NoteView: React.FunctionComponent<Props> = ({ note, onClick, onRemo
   );
 
   return (
-    <Container onClick={handleClick}>
-      <Text>{note.text}</Text>
-      <CreatedAt>{createdAt}</CreatedAt>
+    <Container className={className} onClick={handleClick}>
+      <Content>
+        <Text>{note.text}</Text>
+        <CreatedAt>{createdAt}</CreatedAt>
+      </Content>
       <RemoveButton onClick={handleRemove}>Remove</RemoveButton>
     </Container>
   );
@@ -37,18 +45,33 @@ export const NoteView: React.FunctionComponent<Props> = ({ note, onClick, onRemo
 
 const Container = styled(ListItem)`
   display: flex;
+  align-items: center;
+  padding: var(--space);
   justify-content: space-between;
+`;
+
+const Content = styled(ListItem)`
+  padding-right: var(--space);
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  height: 100%;
 `;
 
 const Text = styled.p`
   flex-grow: 1;
-  overflow-x: hidden;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 `;
 
 const CreatedAt = styled.p`
   font-size: var(--font-sm);
   min-width: 120px;
   color: var(--color-button-secondary-text--reverse);
+  margin: 0;
 `;
 
 const RemoveButton = styled(SecondaryButton)`

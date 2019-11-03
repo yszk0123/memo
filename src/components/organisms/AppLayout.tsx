@@ -47,6 +47,8 @@ const Header = styled.header`
 `;
 
 const Content = styled.main`
+  width: 100%;
+  flex-grow: 1;
   padding: var(--space);
 `;
 
