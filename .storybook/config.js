@@ -1,5 +1,5 @@
 import { configure, addDecorator } from '@storybook/react';
-import { GlobalStyle } from '../src/components/organisms/GlobalStyle';
+import { GlobalStyle } from '../src/components/core/GlobalStyle';
 import styled from 'styled-components';
 
 // automatically import all files ending in *.stories.{ts,tsx}
