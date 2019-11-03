@@ -36,9 +36,7 @@ export const AppLayout: React.FunctionComponent<Props> = ({ children }) => {
           </Right>
         </Nav>
       </Header>
-      <Content>
-        {user !== null ? children : <LoginButton onClick={userLogin}>Login</LoginButton>}
-      </Content>
+      <Content>{children}</Content>
       <GlobalStyle />
     </Container>
   );

@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { AppLayout } from '../../src/components/organisms/AppLayout';
+import { AppLayout } from '../../src/components/core/AppLayout';
 import { NoteAddDialog } from '../../src/components/organisms/NoteAddDialog';
 import { useNoteAdd } from '../../src/redux/hooks/noteHooks';
 import { noop } from '../../src/utils/noop';

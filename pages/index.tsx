@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { PrimaryFab } from '../src/components/atoms/Fab';
-import { AppLayout } from '../src/components/organisms/AppLayout';
+import { AppLayout } from '../src/components/core/AppLayout';
 import { NoteList } from '../src/components/organisms/NoteList';
 import { useGlobalKeyboardShortcut } from '../src/hooks/useGlobalKeyboardShortcut';
 import { useTypedSelector } from '../src/hooks/useTypedSelector';
