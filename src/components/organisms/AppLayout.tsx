@@ -175,5 +175,6 @@ const variables = css.global`
     --color-button-secondary-text: var(--palette-white);
     --color-button-secondary-text--reverse: var(--palette-grey-500);
     --color-sheet: var(--palette-grey-900);
+    --color-loading: var(--palette-blue-500);
   }
 `;

@@ -9,7 +9,7 @@ import { getAllFromSnapshot } from '../utils/getAllFromSnapshot';
 import { getFromSnapshot } from '../utils/getFromSnapshot';
 import { unwrapDocumentData } from '../utils/unwrapDocumentData';
 
-const LIMIT = 5;
+const LIMIT = 20;
 
 export function useNoteAdd() {
   const dispatch = useDispatch();
