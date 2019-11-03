@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions';
-import React, { useCallback,useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { useRectangle } from '../../../hooks/useRectangle';
@@ -24,38 +24,36 @@ export const MenuStory: React.FunctionComponent = () => {
         <button onClick={action('press')}>press</button>
       </SecondaryBox>
       <SecondaryBox />
-      {position !== null && (
-        <Menu position={position}>
-          <PrimaryBox />
-          <PrimaryBox />
-        </Menu>
-      )}
+      <Menu isOpen position={position}>
+        <PrimaryBox />
+        <PrimaryBox />
+      </Menu>
     </>
   );
 };
 
 export const MenuWithMouseStory: React.FunctionComponent = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState<Position | null>(null);
 
   const handleClick = useCallback((event: React.MouseEvent) => {
     const x = event.clientX;
     const y = event.clientY;
     setPosition({ x, y });
+    setIsOpen(true);
   }, []);
 
   const handleClose = useCallback(() => {
-    setPosition(null);
+    setIsOpen(false);
   }, []);
 
   return (
     <>
       <SecondaryBox onClick={handleClick} />
-      {position !== null && (
-        <Menu position={position} onClose={handleClose}>
-          <PrimaryBox />
-          <PrimaryBox />
-        </Menu>
-      )}
+      <Menu isOpen={isOpen} position={position} onClose={handleClose}>
+        <PrimaryBox />
+        <PrimaryBox />
+      </Menu>
     </>
   );
 };

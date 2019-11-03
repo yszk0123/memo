@@ -30,7 +30,7 @@ export const GlobalStyle = createGlobalStyle`
     --font-md: 1.6rem;
     --font-lg: 1.8rem;
 
-    --transition: 0.2s ease-out;
+    --transition: 0.16s ease-out;
 
     /* @see https://material-ui.com/customization/color/#color-palette */
     --palette-white: #ffffff;
