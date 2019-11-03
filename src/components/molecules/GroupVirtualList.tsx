@@ -2,28 +2,32 @@ import React, { useMemo } from 'react';
 import TinyVirtualList from 'react-tiny-virtual-list';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
-interface Props<T> {
+interface Item {
+  id: string;
+}
+
+interface Props<T extends Item> {
   className?: string;
   items: T[];
   itemSize: number;
   stickyItemSize: number;
   renderItem: (item: T) => React.ReactElement;
   renderStickyItem: (item: T, key: string) => React.ReactElement;
-  onFetchMore: () => void;
+  onFetchMore: (itemId: string) => void;
   getKey: (item: T) => string;
 }
 
-interface Sticky<T> {
+interface Sticky<T extends Item> {
   key: string;
   item: T;
   _: 'sticky';
 }
 
-function isSticky<T>(item: T | Sticky<T>): item is Sticky<T> {
+function isSticky<T extends Item>(item: T | Sticky<T>): item is Sticky<T> {
   return item['_'] === 'sticky';
 }
 
-export function GroupVirtualList<T>({
+export function GroupVirtualList<T extends Item>({
   items,
   itemSize,
   stickyItemSize,
@@ -76,9 +80,16 @@ export function GroupVirtualList<T>({
               return React.cloneElement(listItem, { key: index, style });
             }}
             onItemsRendered={({ stopIndex }) => {
-              if (stopIndex === groupCount - 1) {
-                onFetchMore();
+              if (stopIndex !== groupCount - 1) {
+                return;
               }
+
+              const item = group[stopIndex];
+              if (isSticky(item)) {
+                return;
+              }
+
+              onFetchMore(item.id);
             }}
           />
         );

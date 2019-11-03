@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { firebase } from '../../firebase';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
@@ -8,6 +8,8 @@ import { selectors } from '../selectors';
 import { getAllFromSnapshot } from '../utils/getAllFromSnapshot';
 import { getFromSnapshot } from '../utils/getFromSnapshot';
 import { unwrapDocumentData } from '../utils/unwrapDocumentData';
+
+const LIMIT = 5;
 
 export function useNoteAdd() {
   const dispatch = useDispatch();
@@ -115,9 +117,12 @@ export function useNoteGet() {
   );
 }
 
+type Cursor = firebase.firestore.QueryDocumentSnapshot;
+
 export function useNoteGetAll() {
   const dispatch = useDispatch();
   const user = useTypedSelector(selectors.user);
+  const cursorRef = useRef<Cursor | null>(null);
 
   return useCallback(async () => {
     if (user === null) {
@@ -127,17 +132,25 @@ export function useNoteGetAll() {
     dispatch(noteGetAll.request());
 
     const db = firebase.firestore();
-    const notesRef = db
+    let notesRef = db
       .collection('notes')
       .where('authorId', '==', user.id)
-      .orderBy('createdAt', 'desc');
+      .orderBy('createdAt', 'desc')
+      .limit(LIMIT);
+    if (cursorRef.current !== null) {
+      notesRef = notesRef.startAfter(cursorRef.current);
+    }
     const snapshot: firebase.firestore.QuerySnapshot = await notesRef.get();
     const notes = getAllFromSnapshot<Note>(snapshot);
+    cursorRef.current = snapshot.docs[snapshot.docs.length - 1] || null;
 
     dispatch(noteGetAll.success(notes));
   }, [user, dispatch]);
 }
 
+/**
+ * Pagination is not implemented...
+ */
 export function useNoteSubscribeAll() {
   const dispatch = useDispatch();
   const user = useTypedSelector(selectors.user);

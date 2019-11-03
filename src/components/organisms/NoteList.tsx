@@ -1,7 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Note } from '../../types/NoteType';
-import { noop } from '../../utils/noop';
 import { GroupVirtualList } from '../molecules/GroupVirtualList';
 import { NoteView } from './NoteView';
 import { pad2 } from './pad2';
@@ -13,10 +12,28 @@ interface Props {
   className?: string;
   notes: Note[];
   onRemove: (noteId: string) => void;
+  onFetchMore: (noteId: string) => void;
 }
 
-export const NoteList: React.FunctionComponent<Props> = ({ className, notes, onRemove }) => {
+export const NoteList: React.FunctionComponent<Props> = ({
+  className,
+  notes,
+  onRemove,
+  onFetchMore,
+}) => {
+  const [fetchingNoteId, setFetchingNoteId] = useState();
+
   const getKey = useCallback((note: Note) => getTime(note.createdAt), []);
+
+  const handleFetchMore = useCallback(
+    (noteId: string) => {
+      if (notes.length >= 1 && fetchingNoteId !== noteId) {
+        onFetchMore(notes[notes.length - 1].id);
+        setFetchingNoteId(noteId);
+      }
+    },
+    [notes, fetchingNoteId, onFetchMore],
+  );
 
   return (
     <GroupVirtualList
@@ -31,7 +48,7 @@ export const NoteList: React.FunctionComponent<Props> = ({ className, notes, onR
       renderStickyItem={(note, key) => {
         return <StickyItem key={note.id}>{key}</StickyItem>;
       }}
-      onFetchMore={noop}
+      onFetchMore={handleFetchMore}
     />
   );
 };
