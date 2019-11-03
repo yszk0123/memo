@@ -26,7 +26,7 @@ export const reducer = createReducer<State>({
     return { ...state, isLoading: true };
   })
   .handleAction(noteGetAll.success, (state, { payload: { notes } }) => {
-    return { ...state, notes, isLoading: false };
+    return { ...state, notes: updateAll(state.notes, notes), isLoading: false };
   })
   .handleAction(noteSubscribeAll.success, (state, { payload: { notes } }) => {
     return { ...state, notes: updateAll(state.notes, notes), isLoading: false };
