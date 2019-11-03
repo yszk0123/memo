@@ -6,7 +6,7 @@ interface Props {}
 
 const About: NextPage<Props> = () => {
   return (
-    <AppLayout user={null}>
+    <AppLayout>
       <Link href="/">
         <a>Home</a>
       </Link>

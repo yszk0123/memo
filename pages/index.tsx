@@ -2,7 +2,6 @@ import { NextPage } from 'next';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { PrimaryButton } from '../src/components/atoms/Button';
 import { PrimaryFab } from '../src/components/atoms/Fab';
 import { AppLayout } from '../src/components/organisms/AppLayout';
 import { NoteAddDialog } from '../src/components/organisms/NoteAddDialog';
@@ -15,7 +14,7 @@ import {
   useNoteRemove,
   useNoteUpdate,
 } from '../src/redux/hooks/noteHooks';
-import { useUserLogin, useUserStatusSubscribe } from '../src/redux/hooks/userHooks';
+import { useUserStatusSubscribe } from '../src/redux/hooks/userHooks';
 import { selectors } from '../src/redux/selectors';
 import { Note } from '../src/types/NoteType';
 import { noop } from '../src/utils/noop';
@@ -33,16 +32,12 @@ const Index: NextPage<Props> = () => {
   const [dialogType, setDialogType] = useState(DialogType.NONE);
   const [currentNote, setCurrentNote] = useState<Note | null>(null);
 
-  const user = useTypedSelector(selectors.user);
   const notes = useTypedSelector(selectors.notes);
   const isLoading = useTypedSelector(selectors.isLoading);
 
-  const userLogin = useUserLogin();
   const noteAdd = useNoteAdd();
   const noteUpdate = useNoteUpdate();
   const noteRemove = useNoteRemove();
-
-  const handleLogin = userLogin;
 
   const handleNoteAdd = useCallback(
     (text: string) => {
@@ -91,24 +86,16 @@ const Index: NextPage<Props> = () => {
     onSave: noop,
   });
 
-  if (user === null) {
-    return (
-      <AppLayout user={null}>
-        <PrimaryButton onClick={handleLogin}>Login</PrimaryButton>
-      </AppLayout>
-    );
-  }
-
   if (isLoading) {
     return (
-      <AppLayout user={null}>
+      <AppLayout>
         <p>Loading...</p>
       </AppLayout>
     );
   }
 
   return (
-    <AppLayout user={user}>
+    <AppLayout>
       <NoteList notes={notes} onClick={handleOpenUpdate} onRemove={handleNoteRemove} />
       {dialogType === DialogType.ADD && (
         <NoteAddDialog initialText="" onSubmit={handleNoteAdd} onCancel={handleCancel} />

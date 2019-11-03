@@ -2,20 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import css from 'styled-jsx/css';
 import { APP_NAME } from '../../constants';
-import { User } from '../../types/UserType';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useUserLogin } from '../../redux/hooks/userHooks';
+import { selectors } from '../../redux/selectors';
+import { PrimaryButton } from '../atoms/Button';
 
-interface Props {
-  user: User | null;
-}
+interface Props {}
 
-export const AppLayout: React.FunctionComponent<Props> = ({ user, children }) => {
+export const AppLayout: React.FunctionComponent<Props> = ({ children }) => {
+  const user = useTypedSelector(selectors.user);
+  const userLogin = useUserLogin();
+
   return (
     <Container>
       <Header>
         <p>{APP_NAME}</p>
         {user !== null && <p>{user.displayName}</p>}
       </Header>
-      <Content>{children}</Content>
+      <Content>
+        {user !== null ? children : <PrimaryButton onClick={userLogin}>Login</PrimaryButton>}
+      </Content>
       <style jsx global>
         {reset}
       </style>
