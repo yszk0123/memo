@@ -7,7 +7,8 @@ import { NoteAddDialog } from '../src/components/organisms/NoteAddDialog';
 import { NoteList } from '../src/components/organisms/NoteList';
 import { useGlobalKeyboardShortcut } from '../src/hooks/useGlobalKeyboardShortcut';
 import { useTypedSelector } from '../src/hooks/useTypedSelector';
-import { noteAdd, noteRemove, noteUpdate, userLogin } from '../src/redux/actions';
+import { useNoteAdd, useNoteRemove, useNoteUpdate } from '../src/redux/hooks/noteHooks';
+import { useUserLogin, useUserStatusSubscribe } from '../src/redux/hooks/userHooks';
 import { selectors } from '../src/redux/selectors';
 import { Note } from '../src/types/NoteType';
 import { noop } from '../src/utils/noop';
@@ -28,26 +29,29 @@ const Index: NextPage<Props> = () => {
   const user = useTypedSelector(selectors.user);
   const notes = useTypedSelector(selectors.notes);
 
-  const handleLogin = useCallback(() => {
-    dispatch(userLogin.request());
-  }, [dispatch]);
+  const userLogin = useUserLogin();
+  const noteAdd = useNoteAdd();
+  const noteUpdate = useNoteUpdate();
+  const noteRemove = useNoteRemove();
+
+  const handleLogin = userLogin;
 
   const handleNoteAdd = useCallback(
     (text: string) => {
-      dispatch(noteAdd.request(text));
+      noteAdd(text);
       setDialogType(DialogType.NONE);
     },
-    [dispatch],
+    [noteAdd],
   );
 
   const handleNoteUpdate = useCallback(
     (text: string) => {
       if (currentNote) {
-        dispatch(noteUpdate.request(currentNote.id, text));
+        noteUpdate(currentNote.id, text);
         setDialogType(DialogType.NONE);
       }
     },
-    [dispatch, currentNote],
+    [noteUpdate, currentNote],
   );
 
   const handleOpenAdd = useCallback(() => {
@@ -63,12 +67,9 @@ const Index: NextPage<Props> = () => {
     setDialogType(DialogType.NONE);
   }, []);
 
-  const handleNoteRemove = useCallback(
-    (noteId: string) => {
-      dispatch(noteRemove.request(noteId));
-    },
-    [dispatch],
-  );
+  const handleNoteRemove = noteRemove;
+
+  useUserStatusSubscribe();
 
   useGlobalKeyboardShortcut({
     dispatch,
