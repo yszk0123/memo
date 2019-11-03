@@ -4,7 +4,7 @@ import { useCallback, useEffect } from 'react';
 import { AppLayout } from '../../src/components/organisms/AppLayout';
 import { NoteAdd } from '../../src/components/templates/NoteAdd';
 import { useTypedSelector } from '../../src/hooks/useTypedSelector';
-import { useNoteGet, useNoteUpdate } from '../../src/redux/hooks/noteHooks';
+import { useNoteGet, useNoteRemove, useNoteUpdate } from '../../src/redux/hooks/noteHooks';
 import { selectors } from '../../src/redux/selectors';
 
 interface Props {}
@@ -14,6 +14,7 @@ const NotesShow: NextPage<Props> = () => {
   const noteId = Array.isArray(router.query.id) ? null : router.query.id;
   const note = useTypedSelector(state => selectors.note(state, noteId));
   const noteUpdate = useNoteUpdate();
+  const noteRemove = useNoteRemove();
   const noteGet = useNoteGet();
 
   const handleNoteUpdate = useCallback(
@@ -24,6 +25,13 @@ const NotesShow: NextPage<Props> = () => {
     },
     [noteUpdate, note],
   );
+
+  const handleNoteRemove = useCallback(() => {
+    if (noteId !== null) {
+      noteRemove(noteId);
+      router.push('/');
+    }
+  }, [noteId, noteRemove]);
 
   useEffect(() => {
     if (note === null && noteId !== null) {
@@ -39,7 +47,9 @@ const NotesShow: NextPage<Props> = () => {
     );
   }
 
-  return <NoteAdd initialText={note.text} onSubmit={handleNoteUpdate} />;
+  return (
+    <NoteAdd initialText={note.text} onSubmit={handleNoteUpdate} onRemove={handleNoteRemove} />
+  );
 };
 
 export default NotesShow;

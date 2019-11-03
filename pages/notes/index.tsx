@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { NoteAdd } from '../../src/components/templates/NoteAdd';
 import { useNoteAdd } from '../../src/redux/hooks/noteHooks';
+import { noop } from '../../src/utils/noop';
 
 interface Props {}
 
@@ -18,7 +19,7 @@ const NotesCreate: NextPage<Props> = () => {
     [noteAdd, router],
   );
 
-  return <NoteAdd initialText="" onSubmit={handleNoteAdd} />;
+  return <NoteAdd initialText="" onSubmit={handleNoteAdd} onRemove={noop} />;
 };
 
 export default NotesCreate;
