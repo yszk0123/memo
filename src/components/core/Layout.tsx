@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import { APP_NAME } from '../../constants';
 import { User } from '../../types/UserType';
-import { DefaultButton, PrimaryButton } from '../atoms/Button';
-import { TextLink } from '../atoms/TextLink';
+import { DefaultButton } from '../atoms/Button';
+import { HeadingLink } from '../atoms/TextLink';
 import { GlobalStyle } from './GlobalStyle';
 
 interface Props {
@@ -19,12 +19,12 @@ export const Layout: React.FunctionComponent<Props> = ({ children, user, onLogin
       <Header>
         <Nav>
           <Left>
-            <TextLink href="/">{APP_NAME}</TextLink>
+            <HeadingLink href="/">{APP_NAME}</HeadingLink>
           </Left>
           <Right>
             {user !== null ? (
               <>
-                <p>{user.displayName}</p>
+                <DisplayName>{user.displayName}</DisplayName>
                 <LogoutButton onClick={onLogout}>Logout</LogoutButton>
               </>
             ) : (
@@ -50,7 +50,7 @@ const Container = styled.div`
 
 const Header = styled.header`
   background-color: var(--color-button-primary);
-  padding: var(--space);
+  padding: var(--space) calc(var(--space) * 2);
   color: var(--color-button-primary-text);
   box-shadow: 0 1px 1px 0 var(--color-shadow);
   width: 100%;
@@ -68,6 +68,10 @@ const Content = styled.main`
   flex-grow: 1;
 `;
 
+const DisplayName = styled.p`
+  margin: 0;
+`;
+
 const Left = styled.div`
   align-items: center;
   display: flex;
@@ -78,8 +82,8 @@ const Right = styled.div`
   display: flex;
 `;
 
-const LoginButton = styled(PrimaryButton)`
-  margin: var(--space);
+const LoginButton = styled(DefaultButton)`
+  margin-left: var(--space);
 `;
 
 const LogoutButton = styled(DefaultButton)`
