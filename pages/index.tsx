@@ -28,6 +28,7 @@ const Index: NextPage<Props> = () => {
 
   const user = useTypedSelector(selectors.user);
   const notes = useTypedSelector(selectors.notes);
+  const isLoading = useTypedSelector(selectors.isLoading);
 
   const userLogin = useUserLogin();
   const noteAdd = useNoteAdd();
@@ -81,6 +82,14 @@ const Index: NextPage<Props> = () => {
     return (
       <AppLayout user={null}>
         <PrimaryButton onClick={handleLogin}>Login</PrimaryButton>
+      </AppLayout>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <AppLayout user={null}>
+        <p>Loading...</p>
       </AppLayout>
     );
   }

@@ -5,6 +5,7 @@ import { noteAdd, noteGetAll, noteRemove, noteUpdate, userLogin, userLogout } fr
 export const reducer = createReducer<State>({
   user: null,
   notes: [],
+  isLoading: true,
 })
   .handleAction(userLogin.success, (state, { payload: { user } }) => {
     return { ...state, user };
@@ -12,8 +13,14 @@ export const reducer = createReducer<State>({
   .handleAction(userLogout.success, state => {
     return { ...state, user: null };
   })
+  .handleAction(noteGetAll.request, state => {
+    return { ...state, isLoading: true };
+  })
   .handleAction(noteGetAll.success, (state, { payload: { notes } }) => {
-    return { ...state, notes };
+    return { ...state, notes, isLoading: false };
+  })
+  .handleAction(noteGetAll.failure, state => {
+    return { ...state, isLoading: false };
   })
   .handleAction(noteAdd.success, (state, { payload: { note } }) => {
     return { ...state, notes: [note, ...state.notes] };
