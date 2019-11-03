@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 import css from 'styled-jsx/css';
@@ -7,6 +6,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useUserLogin, useUserStatusSubscribe } from '../../redux/hooks/userHooks';
 import { selectors } from '../../redux/selectors';
 import { PrimaryButton } from '../atoms/Button';
+import { TextLink } from '../atoms/TextLink';
 
 interface Props {}
 
@@ -19,9 +19,7 @@ export const AppLayout: React.FunctionComponent<Props> = ({ children }) => {
   return (
     <Container>
       <Header>
-        <Link href="/">
-          <Home>{APP_NAME}</Home>
-        </Link>
+        <TextLink href="/">{APP_NAME}</TextLink>
         {user !== null && <p>{user.displayName}</p>}
       </Header>
       <Content>
@@ -36,15 +34,6 @@ export const AppLayout: React.FunctionComponent<Props> = ({ children }) => {
     </Container>
   );
 };
-
-const Home = styled.p`
-  cursor: pointer;
-  transition: opacity var(--transition);
-
-  &:hover {
-    opacity: var(--opacity--hover);
-  }
-`;
 
 const Container = styled.div`
   position: absolute;
