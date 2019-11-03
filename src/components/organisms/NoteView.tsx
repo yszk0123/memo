@@ -5,6 +5,7 @@ import { Note } from '../../types/NoteType';
 import { SecondaryButton } from '../atoms/Button';
 import { LineBreakableText } from '../atoms/LineBreakableText';
 import { ListItem } from '../atoms/ListItem';
+import { pad2 } from './pad2';
 
 interface Props {
   className?: string;
@@ -85,8 +86,4 @@ function formatTime(timestamp: number): string {
   const h = date.getHours();
   const m = date.getMinutes();
   return `${year}-${pad2(month)}-${pad2(d)} ${pad2(h)}:${pad2(m)}`;
-}
-
-function pad2(n: number): string {
-  return n < 10 ? `0${n}` : `${n}`;
 }

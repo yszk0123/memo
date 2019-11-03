@@ -137,6 +137,8 @@ const variables = css.global`
     --color-default: var(--palette-white);
     --color-default--hover: var(--palette-grey-200);
     --color-text: var(--palette-grey-900);
+    --color-secondary-text: var(--palette-grey-500);
+    --color-dim: var(--palette-grey-100);
     --color-disabled: var(--palette-grey-200);
     --color-button-default: var(--palette-white);
     --color-button-default-hover: var(--palette-grey-200);

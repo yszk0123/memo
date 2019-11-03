@@ -8,7 +8,7 @@ interface Props<T> {
   itemSize: number;
   stickyItemSize: number;
   renderItem: (item: T) => React.ReactElement;
-  renderStickyItem: (item: T) => React.ReactElement;
+  renderStickyItem: (item: T, key: string) => React.ReactElement;
   onFetchMore: () => void;
   getKey: (item: T) => string;
 }
@@ -70,7 +70,9 @@ export function GroupVirtualList<T>({
             }}
             renderItem={({ index, style }) => {
               const item = group[index];
-              const listItem = isSticky(item) ? renderStickyItem(item.item) : renderItem(item);
+              const listItem = isSticky(item)
+                ? renderStickyItem(item.item, item.key)
+                : renderItem(item);
               return React.cloneElement(listItem, { key: index, style });
             }}
             onItemsRendered={({ stopIndex }) => {
