@@ -40,7 +40,7 @@ const Container = styled(ListItem)`
   justify-content: space-between;
 `;
 
-const Text = styled.pre`
+const Text = styled.p`
   flex-grow: 1;
   overflow-x: hidden;
 `;
