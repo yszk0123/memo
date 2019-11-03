@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { firebase, GoogleAuthProvider } from '../../firebase';
 import { User } from '../../types/UserType';
 import { userLogin, userLogout } from '../actions';
-import { useNoteGetAll } from './noteHooks';
 
 function toUser(user: firebase.User): User {
   return { id: user.uid, displayName: user.displayName };
@@ -11,7 +10,6 @@ function toUser(user: firebase.User): User {
 
 export function useUserStatusSubscribe() {
   const dispatch = useDispatch();
-  const noteGetAll = useNoteGetAll();
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(rawUser => {
@@ -24,10 +22,6 @@ export function useUserStatusSubscribe() {
     });
     return unsubscribe;
   }, []);
-
-  useEffect(() => {
-    noteGetAll();
-  }, [noteGetAll]);
 }
 
 export function useUserLogin() {

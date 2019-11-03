@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { PrimaryButton } from '../src/components/atoms/Button';
@@ -9,7 +9,12 @@ import { NoteAddDialog } from '../src/components/organisms/NoteAddDialog';
 import { NoteList } from '../src/components/organisms/NoteList';
 import { useGlobalKeyboardShortcut } from '../src/hooks/useGlobalKeyboardShortcut';
 import { useTypedSelector } from '../src/hooks/useTypedSelector';
-import { useNoteAdd, useNoteRemove, useNoteUpdate } from '../src/redux/hooks/noteHooks';
+import {
+  useNoteAdd,
+  useNoteGetAll,
+  useNoteRemove,
+  useNoteUpdate,
+} from '../src/redux/hooks/noteHooks';
 import { useUserLogin, useUserStatusSubscribe } from '../src/redux/hooks/userHooks';
 import { selectors } from '../src/redux/selectors';
 import { Note } from '../src/types/NoteType';
@@ -71,6 +76,12 @@ const Index: NextPage<Props> = () => {
   }, []);
 
   const handleNoteRemove = noteRemove;
+
+  const noteGetAll = useNoteGetAll();
+
+  useEffect(() => {
+    noteGetAll();
+  }, [noteGetAll]);
 
   useUserStatusSubscribe();
 
