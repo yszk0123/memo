@@ -20,7 +20,7 @@ jobs:
       - name: Build
         uses: borales/actions-yarn@v2.0.0
         with:
-          cmd: build
+          cmd: build:prod
         env:
           REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
           REACT_APP_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.REACT_APP_FIREBASE_MESSAGING_SENDER_ID }}
@@ -30,4 +30,4 @@ jobs:
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./build
+          PUBLISH_DIR: ./out
