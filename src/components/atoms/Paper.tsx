@@ -1,14 +1,10 @@
-import classNames from 'classnames';
-import React, { HTMLProps } from 'react';
+import { HTMLProps } from 'react';
+import styled from 'styled-components';
 
 interface Props extends HTMLProps<HTMLDivElement> {
   className?: string;
 }
 
-export const Paper: React.FunctionComponent<Props> = ({ className, children, ...props }) => {
-  return (
-    <div {...props} className={classNames('Paper', className)}>
-      {children}
-    </div>
-  );
-};
+export const Paper = styled.div<Props>`
+  box-shadow: 0 1px 2px 1px var(--color-shadow);
+`;

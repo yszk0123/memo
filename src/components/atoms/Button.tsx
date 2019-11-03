@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import React from 'react';
+import styled from 'styled-components';
 
 interface Props {
   className?: string;
@@ -7,22 +7,62 @@ interface Props {
   onClick: (event: React.MouseEvent) => void;
 }
 
-const Button: React.FunctionComponent<Props> = ({ className, children, disabled, onClick }) => {
-  return (
-    <button className={classNames('Button', className)} disabled={disabled} onClick={onClick}>
-      {children}
-    </button>
-  );
-};
+const Button = styled.button<Props>`
+  padding: var(--space);
+  border-width: var(--border-width);
+  border-radius: var(--radius);
 
-export const DefaultButton: React.FunctionComponent<Props> = ({ className, ...props }) => {
-  return <Button className={classNames('DefaultButton', className)} {...props} />;
-};
+  &:hover {
+    cursor: pointer;
+  }
+  &:active {
+    cursor: pointer;
+  }
+  &:disabled {
+    background-color: var(--color-disabled);
+    border-color: var(--color-disabled);
+    cursor: default;
+  }
+`;
 
-export const PrimaryButton: React.FunctionComponent<Props> = ({ className, ...props }) => {
-  return <Button className={classNames('PrimaryButton', className)} {...props} />;
-};
+export const DefaultButton = styled(Button)<Props>`
+  background-color: var(--color-button-default);
+  border-color: var(--color-button-default);
 
-export const SecondaryButton: React.FunctionComponent<Props> = ({ className, ...props }) => {
-  return <Button className={classNames('SecondaryButton', className)} {...props} />;
-};
+  &:hover {
+    background-color: var(--color-button-default-hover);
+    border-color: var(--color-button-default-hover);
+  }
+  &:active {
+    background-color: var(--color-button-default-active);
+    border-color: var(--color-button-default-active);
+  }
+`;
+
+export const PrimaryButton = styled(Button)`
+  background-color: var(--color-button-primary);
+  border-color: var(--color-button-primary);
+
+  &:hover {
+    background-color: var(--color-button-primary-hover);
+    border-color: var(--color-button-primary-hover);
+  }
+  &:active {
+    background-color: var(--color-button-primary-active);
+    border-color: var(--color-button-primary-active);
+  }
+`;
+
+export const SecondaryButton = styled(Button)`
+  background-color: var(--color-button-secondary);
+  border-color: var(--color-button-secondary);
+
+  :hover {
+    background-color: var(--color-button-secondary-hover);
+    border-color: var(--color-button-secondary-hover);
+  }
+  :active {
+    background-color: var(--color-button-secondary-active);
+    border-color: var(--color-button-secondary-active);
+  }
+`;

@@ -12,29 +12,38 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "firebase": "^7.2.2",
+    "next": "^9.1.2",
+    "next-redux-wrapper": "^4.0.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-redux": "^7.1.1",
-    "react-scripts": "^3.2.0",
     "redux": "^4.0.4",
-    "redux-saga": "^1.1.1",
-    "shortid": "^2.2.15"
+    "redux-thunk": "^2.3.0",
+    "shortid": "^2.2.15",
+    "styled-components": "^4.4.1",
+    "typesafe-actions": "^5.1.0-1"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
     "@types/firebase": "^3.2.1",
+    "@types/node": "^12.12.5",
     "@types/react": "^16.9.9",
     "@types/react-dom": "^16.9.2",
     "@types/react-redux": "^7.1.5",
+    "@types/redux-thunk": "^2.1.0",
     "@types/shortid": "^0.0.29",
+    "@types/styled-components": "^4.1.20",
+    "@types/styled-jsx": "^2.2.8",
+    "babel-plugin-styled-components": "^1.10.6",
     "prettier": "^1.18.2",
     "typescript": "^3.6.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export",
+    "build:prod": "rm -rf .next out && yarn build && yarn export"
   },
   "browserslist": [
     ">0.2%",
