@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import css from 'styled-jsx/css';
 import { APP_NAME } from '../../constants';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { useUserLogin, useUserStatusSubscribe } from '../../redux/hooks/userHooks';
+import { useUserLogin, useUserLogout, useUserStatusSubscribe } from '../../redux/hooks/userHooks';
 import { selectors } from '../../redux/selectors';
-import { PrimaryButton } from '../atoms/Button';
+import { DefaultButton, PrimaryButton } from '../atoms/Button';
 import { TextLink } from '../atoms/TextLink';
 
 interface Props {}
@@ -13,14 +13,28 @@ interface Props {}
 export const AppLayout: React.FunctionComponent<Props> = ({ children }) => {
   const user = useTypedSelector(selectors.user);
   const userLogin = useUserLogin();
+  const userLogout = useUserLogout();
 
   useUserStatusSubscribe();
 
   return (
     <Container>
       <Header>
-        <TextLink href="/">{APP_NAME}</TextLink>
-        {user !== null && <p>{user.displayName}</p>}
+        <Nav>
+          <Left>
+            <TextLink href="/">{APP_NAME}</TextLink>
+          </Left>
+          <Right>
+            {user !== null ? (
+              <>
+                <p>{user.displayName}</p>
+                <LogoutButton onClick={userLogout}>Logout</LogoutButton>
+              </>
+            ) : (
+              <LoginButton onClick={userLogin}>Login</LoginButton>
+            )}
+          </Right>
+        </Nav>
       </Header>
       <Content>
         {user !== null ? children : <LoginButton onClick={userLogin}>Login</LoginButton>}
@@ -45,13 +59,17 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   background-color: var(--color-button-primary);
   padding: var(--space);
   color: var(--color-button-primary-text);
   box-shadow: 0 1px 1px 0 var(--color-shadow);
+  width: 100%;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
 `;
 
@@ -60,8 +78,22 @@ const Content = styled.main`
   flex-grow: 1;
 `;
 
+const Left = styled.div`
+  align-items: center;
+  display: flex;
+`;
+
+const Right = styled.div`
+  align-items: center;
+  display: flex;
+`;
+
 const LoginButton = styled(PrimaryButton)`
   margin: var(--space);
+`;
+
+const LogoutButton = styled(DefaultButton)`
+  margin-left: var(--space);
 `;
 
 const reset = css.global`
