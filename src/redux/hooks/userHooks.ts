@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { firebase, GoogleAuthProvider } from '../../firebase';
 import { User } from '../../types/UserType';
 import { userLogin, userLogout } from '../actions';
@@ -21,7 +22,7 @@ export function useUserStatusSubscribe() {
       }
     });
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
 }
 
 export function useUserLogin() {

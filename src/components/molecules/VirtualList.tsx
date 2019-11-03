@@ -24,7 +24,6 @@ export function VirtualList<T>({
         return (
           <TinyVirtualList
             height={height}
-            width={width}
             itemCount={itemCount}
             itemSize={itemSize}
             renderItem={({ index, style }) => {
@@ -32,6 +31,7 @@ export function VirtualList<T>({
               const listItem = renderItem(item);
               return React.cloneElement(listItem, { key: index, style });
             }}
+            width={width}
             onItemsRendered={({ stopIndex }) => {
               if (stopIndex === itemCount - 1) {
                 onFetchMore(items[itemCount - 1]);

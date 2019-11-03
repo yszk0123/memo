@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+
 import { Dispatch } from '../types/ReduxType';
 import { KeyCode } from '../utils/Keyboard';
 import { useGlobalKeyboard } from './useGlobalKeyboard';
@@ -25,7 +26,7 @@ export function useGlobalKeyboardShortcut({ dispatch, onAdd, onSave }: Options) 
       }
       event.preventDefault();
     },
-    [dispatch, onAdd, onSave],
+    [onAdd, onSave],
   );
 
   useGlobalKeyboard({ onKeyDown });

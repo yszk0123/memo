@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
 import { PrimaryFab } from '../src/components/atoms/Fab';
 import { NoteList } from '../src/components/organisms/NoteList';
 import { AppLayout } from '../src/components/templates/AppLayout';
@@ -33,7 +34,7 @@ const Index: NextPage<Props> = () => {
 
   return (
     <AppLayout>
-      <NoteList notes={notes} onRemove={noteRemove} onFetchMore={noteGetAll} />
+      <NoteList notes={notes} onFetchMore={noteGetAll} onRemove={noteRemove} />
       <Loading className={isLoading ? 'visible' : undefined}>Loading</Loading>
       <Link href="/notes">
         <AddFab>Add</AddFab>

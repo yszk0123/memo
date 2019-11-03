@@ -65,9 +65,7 @@ export function GroupVirtualList<T extends Item>({
         return (
           <TinyVirtualList
             height={height}
-            width={width}
             itemCount={groupCount}
-            stickyIndices={stickyIndices}
             itemSize={i => {
               const item = group[i];
               return isSticky(item) ? stickyItemSize : itemSize;
@@ -79,6 +77,8 @@ export function GroupVirtualList<T extends Item>({
                 : renderItem(item);
               return React.cloneElement(listItem, { key: index, style });
             }}
+            stickyIndices={stickyIndices}
+            width={width}
             onItemsRendered={({ stopIndex }) => {
               if (stopIndex !== groupCount - 1) {
                 return;

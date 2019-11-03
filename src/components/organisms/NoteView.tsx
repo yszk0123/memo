@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+
 import { Note } from '../../types/NoteType';
 import { LineBreakableText } from '../atoms/LineBreakableText';
 import { ListItem } from '../atoms/ListItem';
@@ -17,7 +18,7 @@ export const NoteView: React.FunctionComponent<Props> = ({ className, style, not
   const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
 
   return (
-    <Link href="/notes/[id]" as={`/notes/${note.id}`}>
+    <Link as={`/notes/${note.id}`} href="/notes/[id]">
       <Container className={className} style={style}>
         <Content>
           <Text>

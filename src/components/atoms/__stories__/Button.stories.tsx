@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import React from 'react';
+
 import { DefaultButton, PrimaryButton, SecondaryButton } from '../Button';
 
 export default {

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+
 import { Size } from '../types/SizeType';
 import { useResize } from './useResize';
 

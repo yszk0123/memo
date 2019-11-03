@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { APP_NAME } from '../../constants';
 import { User } from '../../types/UserType';
 import { DefaultButton, PrimaryButton } from '../atoms/Button';

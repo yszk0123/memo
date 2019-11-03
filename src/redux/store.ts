@@ -1,4 +1,5 @@
 import { compose, createStore as createReduxStore } from 'redux';
+
 import { reducer } from './reducer';
 
 export function createStore() {

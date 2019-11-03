@@ -1,4 +1,5 @@
 import { createReducer } from 'typesafe-actions';
+
 import { State } from '../types/StateType';
 import {
   noteAdd,

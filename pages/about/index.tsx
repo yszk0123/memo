@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
+
 import { NoteAddDialog } from '../../src/components/organisms/NoteAddDialog';
 import { AppLayout } from '../../src/components/templates/AppLayout';
 import { useNoteAdd } from '../../src/redux/hooks/noteHooks';
@@ -15,7 +16,7 @@ const About: NextPage<Props> = () => {
       <Link href="/">
         <a>Home</a>
       </Link>
-      <NoteAddDialog initialText="" onSubmit={noteAdd} onCancel={noop} />
+      <NoteAddDialog initialText="" onCancel={noop} onSubmit={noteAdd} />
     </AppLayout>
   );
 };

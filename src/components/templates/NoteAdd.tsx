@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+
 import { Note } from '../../types/NoteType';
 import { SecondaryButton } from '../atoms/Button';
 import { PrimaryFab, SecondaryFab } from '../atoms/Fab';
@@ -54,7 +55,7 @@ export const NoteAdd: React.FunctionComponent<Props> = ({
       <UpdateFab disabled={disabled} onClick={handleSubmit}>
         Update
       </UpdateFab>
-      <MapFab onClick={handleToggleMap} className={isMap ? undefined : 'hidden'}>
+      <MapFab className={isMap ? undefined : 'hidden'} onClick={handleToggleMap}>
         Map
       </MapFab>
     </AppLayout>

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { firebase } from '../../firebase';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { createNote, Note } from '../../types/NoteType';
