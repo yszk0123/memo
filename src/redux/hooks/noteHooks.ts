@@ -69,6 +69,9 @@ export function useNoteRemove() {
       if (user === null) {
         return;
       }
+      if (!confirm('This operation cannot be undone')) {
+        return;
+      }
 
       dispatch(noteRemove.request(noteId));
 
