@@ -40,9 +40,18 @@
     "@types/shortid": "^0.0.29",
     "@types/styled-components": "^4.1.20",
     "@types/styled-jsx": "^2.2.8",
+    "@typescript-eslint/eslint-plugin": "^2.6.0",
+    "@typescript-eslint/parser": "^2.6.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.6",
     "babel-preset-react-app": "^9.0.2",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-jest": "^23.0.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.2.0",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
     "prettier": "^1.18.2",
     "typescript": "^3.6.4"
   },
@@ -53,7 +62,8 @@
     "export": "next export",
     "build:prod": "rm -rf .next out && yarn build && yarn export && yarn build-storybook && touch out/.nojekyll",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -c .storybook -o out/styleguide"
+    "build-storybook": "build-storybook -c .storybook -o out/styleguide",
+    "lint": "eslint src/ pages/ --ext .ts,.tsx"
   },
   "browserslist": [
     ">0.2%",
