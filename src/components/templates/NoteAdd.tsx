@@ -1,18 +1,29 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { Note } from '../../types/NoteType';
 import { SecondaryButton } from '../atoms/Button';
-import { PrimaryFab } from '../atoms/Fab';
+import { PrimaryFab, SecondaryFab } from '../atoms/Fab';
+import { GoogleMaps } from '../atoms/GoogleMaps';
 import { TextArea } from '../atoms/TextArea';
 import { AppLayout } from '../organisms/AppLayout';
 
+const MIN_HEIGHT = 300;
+
 interface Props {
   initialText: string;
+  note?: Note | null;
   onSubmit: (text: string) => void;
   onRemove: () => void;
 }
 
-export const NoteAdd: React.FunctionComponent<Props> = ({ initialText, onSubmit, onRemove }) => {
+export const NoteAdd: React.FunctionComponent<Props> = ({
+  initialText,
+  note,
+  onSubmit,
+  onRemove,
+}) => {
   const [text, setText] = useState(initialText);
+  const [isMap, setIsMap] = useState(false);
 
   const handleChange = useCallback((event: React.FormEvent<HTMLTextAreaElement>) => {
     const newText = event.currentTarget.value;
@@ -23,6 +34,10 @@ export const NoteAdd: React.FunctionComponent<Props> = ({ initialText, onSubmit,
     onSubmit(text);
   }, [text, onSubmit]);
 
+  const handleToggleMap = useCallback(() => {
+    setIsMap(v => !v);
+  }, []);
+
   const disabled = text === '';
 
   return (
@@ -30,10 +45,18 @@ export const NoteAdd: React.FunctionComponent<Props> = ({ initialText, onSubmit,
       <Content>
         <ContentText autoFocus value={text} onChange={handleChange} />
         <RemoveButton onClick={onRemove}>Remove</RemoveButton>
+        {note != null && note.coordinate != null && isMap && (
+          <Map>
+            <GoogleMaps coordinate={note.coordinate} />
+          </Map>
+        )}
       </Content>
       <UpdateFab disabled={disabled} onClick={handleSubmit}>
         Update
       </UpdateFab>
+      <MapFab onClick={handleToggleMap} className={isMap ? undefined : 'hidden'}>
+        Map
+      </MapFab>
     </AppLayout>
   );
 };
@@ -47,10 +70,18 @@ const Content = styled.div`
   height: 100%;
 `;
 
+const Map = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-grow: 1;
+`;
+
 const ContentText = styled(TextArea)`
   /* Move to parent */
   font-size: var(--font-md);
   flex-grow: 1;
+  min-height: ${MIN_HEIGHT}px;
   border: none;
 `;
 
@@ -58,6 +89,16 @@ const UpdateFab = styled(PrimaryFab)`
   position: fixed;
   right: calc(var(--space) * 2);
   bottom: calc(var(--space) * 2);
+`;
+
+const MapFab = styled(SecondaryFab)`
+  position: fixed;
+  left: calc(var(--space) * 2);
+  bottom: calc(var(--space) * 2);
+
+  &.hidden {
+    opacity: var(--opacity--hover);
+  }
 `;
 
 const RemoveButton = styled(SecondaryButton)`

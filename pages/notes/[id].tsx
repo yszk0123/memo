@@ -48,7 +48,12 @@ const NotesShow: NextPage<Props> = () => {
   }
 
   return (
-    <NoteAdd initialText={note.text} onSubmit={handleNoteUpdate} onRemove={handleNoteRemove} />
+    <NoteAdd
+      initialText={note.text}
+      note={note}
+      onSubmit={handleNoteUpdate}
+      onRemove={handleNoteRemove}
+    />
   );
 };
 
