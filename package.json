@@ -25,6 +25,11 @@
     "typesafe-actions": "^5.1.0-1"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addon-links": "^5.2.5",
+    "@storybook/addons": "^5.2.5",
+    "@storybook/react": "^5.2.5",
     "@types/classnames": "^2.2.9",
     "@types/firebase": "^3.2.1",
     "@types/node": "^12.12.5",
@@ -35,6 +40,7 @@
     "@types/shortid": "^0.0.29",
     "@types/styled-components": "^4.1.20",
     "@types/styled-jsx": "^2.2.8",
+    "babel-loader": "^8.0.6",
     "babel-plugin-styled-components": "^1.10.6",
     "prettier": "^1.18.2",
     "typescript": "^3.6.4"
@@ -44,7 +50,9 @@
     "build": "next build",
     "start": "next start",
     "export": "next export",
-    "build:prod": "rm -rf .next out && yarn build && yarn export && touch out/.nojekyll"
+    "build:prod": "rm -rf .next out && yarn build && yarn export && touch out/.nojekyll",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "browserslist": [
     ">0.2%",
