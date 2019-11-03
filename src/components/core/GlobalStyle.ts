@@ -25,6 +25,8 @@ export const GlobalStyle = createGlobalStyle`
     --radius: 4px;
     --border-width: 1px;
     --opacity--hover: 0.4;
+    --menu-offset-x: calc(-0.5 * var(--space));
+    --menu-offset-y: calc(-1 * var(--space));
 
     --font-sm: 1.4rem;
     --font-md: 1.6rem;
