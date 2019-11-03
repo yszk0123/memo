@@ -8,11 +8,12 @@ import { ListItem } from '../atoms/ListItem';
 
 interface Props {
   className?: string;
+  style?: React.CSSProperties;
   note: Note;
   onRemove: (noteId: string) => void;
 }
 
-export const NoteView: React.FunctionComponent<Props> = ({ className, note, onRemove }) => {
+export const NoteView: React.FunctionComponent<Props> = ({ className, style, note, onRemove }) => {
   const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
 
   const handleRemove = useCallback(
@@ -26,7 +27,7 @@ export const NoteView: React.FunctionComponent<Props> = ({ className, note, onRe
 
   return (
     <Link href="/notes/[id]" as={`/notes/${note.id}`}>
-      <Container className={className}>
+      <Container className={className} style={style}>
         <Content>
           <Text>
             <LineBreakableText text={note.text} />
