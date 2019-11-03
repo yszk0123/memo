@@ -1,22 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { APP_NAME } from '../../constants';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { useUserLogin, useUserLogout, useUserStatusSubscribe } from '../../redux/hooks/userHooks';
-import { selectors } from '../../redux/selectors';
+import { User } from '../../types/UserType';
 import { DefaultButton, PrimaryButton } from '../atoms/Button';
 import { TextLink } from '../atoms/TextLink';
 import { GlobalStyle } from './GlobalStyle';
 
-interface Props {}
+interface Props {
+  user: User | null;
+  onLogin: () => void;
+  onLogout: () => void;
+}
 
-export const AppLayout: React.FunctionComponent<Props> = ({ children }) => {
-  const user = useTypedSelector(selectors.user);
-  const userLogin = useUserLogin();
-  const userLogout = useUserLogout();
-
-  useUserStatusSubscribe();
-
+export const Layout: React.FunctionComponent<Props> = ({ children, user, onLogin, onLogout }) => {
   return (
     <Container>
       <Header>
@@ -28,10 +24,10 @@ export const AppLayout: React.FunctionComponent<Props> = ({ children }) => {
             {user !== null ? (
               <>
                 <p>{user.displayName}</p>
-                <LogoutButton onClick={userLogout}>Logout</LogoutButton>
+                <LogoutButton onClick={onLogout}>Logout</LogoutButton>
               </>
             ) : (
-              <LoginButton onClick={userLogin}>Login</LoginButton>
+              <LoginButton onClick={onLogin}>Login</LoginButton>
             )}
           </Right>
         </Nav>

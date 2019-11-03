@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
-import { AppLayout } from '../../src/components/core/AppLayout';
+import { AppLayout } from '../../src/components/templates/AppLayout';
 import { NoteAdd } from '../../src/components/templates/NoteAdd';
 import { useTypedSelector } from '../../src/hooks/useTypedSelector';
 import { useNoteGet, useNoteRemove, useNoteUpdate } from '../../src/redux/hooks/noteHooks';

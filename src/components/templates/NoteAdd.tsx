@@ -5,7 +5,7 @@ import { SecondaryButton } from '../atoms/Button';
 import { PrimaryFab, SecondaryFab } from '../atoms/Fab';
 import { GoogleMaps } from '../atoms/GoogleMaps';
 import { TextArea } from '../atoms/TextArea';
-import { AppLayout } from '../core/AppLayout';
+import { AppLayout } from './AppLayout';
 
 const MIN_HEIGHT = 300;
 
