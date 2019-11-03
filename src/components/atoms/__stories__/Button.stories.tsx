@@ -6,14 +6,14 @@ export default {
   title: 'atoms/Button',
 };
 
-export const defaultButton = () => (
+export const DefaultButtonStory = () => (
   <DefaultButton onClick={action('clicked')}>Button</DefaultButton>
 );
 
-export const primaryButton = () => (
+export const PrimaryButtonStory = () => (
   <PrimaryButton onClick={action('clicked')}>Button</PrimaryButton>
 );
 
-export const secondaryButton = () => (
+export const SecondaryButtonStory = () => (
   <SecondaryButton onClick={action('clicked')}>Button</SecondaryButton>
 );

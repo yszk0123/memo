@@ -6,9 +6,9 @@ export default {
   title: 'atoms/Paper',
 };
 
-export const paper = () => <Paper>Paper</Paper>;
+export const PaperStory = () => <Paper>Paper</Paper>;
 
-export const paperWithStyle = () => <StyledPaper>Paper</StyledPaper>;
+export const PaperWithStyleStory = () => <StyledPaper>Paper</StyledPaper>;
 
 const StyledPaper = styled(Paper)`
   margin: var(--space);
