@@ -1,4 +1,5 @@
 import { configure, addDecorator } from '@storybook/react';
+import { withKnobs } from '@storybook/addon-knobs';
 import { GlobalStyle } from '../src/components/core/GlobalStyle';
 import styled from 'styled-components';
 
@@ -21,3 +22,5 @@ const Wrapper = styled.div`
 `;
 
 addDecorator(GlobalStyleDecorator);
+
+addDecorator(withKnobs);

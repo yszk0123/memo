@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { useCallback, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
@@ -5,44 +6,29 @@ import styled from 'styled-components';
 import { Position } from '../../types/GeometoryType';
 import { Paper } from '../atoms/Paper';
 
+export enum MenuPlacement {
+  LEFT_TOP,
+  LEFT_BOTTOM,
+  RIGHT_TOP,
+  RIGHT_BOTTOM,
+}
+
 const stop = (event: React.SyntheticEvent): void => {
   event.stopPropagation();
   event.preventDefault();
 };
 
-interface Props extends React.Props<typeof Paper> {
-  isOpen: boolean;
-  position: Position | null;
-  mountAt?: HTMLElement;
-  onClose?: () => void;
-}
-
-const BareMenu: React.FunctionComponent<Props> = ({
-  ref: _ref,
-  isOpen,
-  position,
-  mountAt,
-  onClose,
-  ...props
-}) => {
-  return ReactDOM.createPortal(
-    <>
-      {isOpen && <Sheet onClick={onClose} />}
-      <MainWrapper
-        className={isOpen ? 'visible' : undefined}
-        style={position ? { left: position.x, top: position.y } : undefined}
-        onClick={stop}
-      >
-        <Main {...props} />
-      </MainWrapper>
-    </>,
-    mountAt || document.body,
-  );
-};
-
 interface MenuProps extends React.Props<typeof Paper> {
+  placement?: MenuPlacement;
   state: MenuState;
 }
+
+export const Menu: React.FunctionComponent<MenuProps> = ({
+  state: { isOpen, position, onClose },
+  ...props
+}) => {
+  return <BareMenu {...props} isOpen={isOpen} position={position} onClose={onClose} />;
+};
 
 export interface MenuState {
   isOpen: boolean;
@@ -74,11 +60,54 @@ export function useMenuState(): MenuState {
   ]);
 }
 
-export const Menu: React.FunctionComponent<MenuProps> = ({
-  state: { isOpen, position, onClose },
+interface Props extends React.Props<typeof Paper> {
+  isOpen: boolean;
+  position: Position | null;
+  mountAt?: HTMLElement;
+  placement?: MenuPlacement;
+  onClose?: () => void;
+}
+
+const BareMenu: React.FunctionComponent<Props> = ({
+  ref: _ref,
+  isOpen,
+  position,
+  mountAt,
+  placement = MenuPlacement.RIGHT_BOTTOM,
+  onClose,
   ...props
 }) => {
-  return <BareMenu {...props} isOpen={isOpen} position={position} onClose={onClose} />;
+  const bottom =
+    placement === MenuPlacement.RIGHT_BOTTOM || placement === MenuPlacement.LEFT_BOTTOM;
+  const right = placement === MenuPlacement.RIGHT_BOTTOM || placement === MenuPlacement.RIGHT_TOP;
+  const style = useMemo(() => {
+    if (position === null) {
+      return undefined;
+    }
+
+    const s: React.CSSProperties = { left: position.x, top: position.y };
+    if (!bottom) {
+      s.marginBottom = 0;
+    }
+    if (!right) {
+      s.marginRight = 0;
+    }
+    return s;
+  }, [position, right, bottom]);
+
+  return ReactDOM.createPortal(
+    <>
+      {isOpen && <Sheet onClick={onClose} />}
+      <MainWrapper
+        className={classNames({ hidden: !isOpen, left: !right, top: !bottom, right, bottom })}
+        style={style}
+        onClick={stop}
+      >
+        <Main {...props} />
+      </MainWrapper>
+    </>,
+    mountAt || document.body,
+  );
 };
 
 const Sheet = styled.div`
@@ -94,14 +123,26 @@ const MainWrapper = styled(Paper)`
   position: absolute;
   background-color: var(--color-menu-bg);
   transition: transform var(--transition), opacity var(--transition);
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(var(--menu-offset-x), var(--menu-offset-y));
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(0, 0);
 
-  &.visible {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translate(0, 0);
+  &.left.hidden {
+    transform: translateX(var(--menu-offset-x));
+  }
+  &.right.hidden {
+    transform: translateX(calc(-1 * var(--menu-offset-x)));
+  }
+  &.top.hidden {
+    transform: translateY(var(--menu-offset-y));
+  }
+  &.bottom.hidden {
+    transform: translateY(calc(-1 * var(--menu-offset-y)));
+  }
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 `;
 

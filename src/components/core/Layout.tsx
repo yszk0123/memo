@@ -4,7 +4,10 @@ import styled from 'styled-components';
 import { APP_NAME } from '../../constants';
 import { User } from '../../types/UserType';
 import { DefaultButton } from '../atoms/Button';
+import { List } from '../atoms/List';
+import { ListItem } from '../atoms/ListItem';
 import { HeadingLink } from '../atoms/TextLink';
+import { Menu, useMenuState } from '../molecules/Menu';
 import { GlobalStyle } from './GlobalStyle';
 
 interface Props {
@@ -14,6 +17,8 @@ interface Props {
 }
 
 export const Layout: React.FunctionComponent<Props> = ({ children, user, onLogin, onLogout }) => {
+  const menuState = useMenuState();
+
   return (
     <Container>
       <Header>
@@ -24,8 +29,14 @@ export const Layout: React.FunctionComponent<Props> = ({ children, user, onLogin
           <Right>
             {user !== null ? (
               <>
-                <DisplayName>{user.displayName}</DisplayName>
-                <LogoutButton onClick={onLogout}>Logout</LogoutButton>
+                <DisplayName onClick={menuState.onOpen}>{user.displayName}</DisplayName>
+                <Menu state={menuState}>
+                  <List>
+                    <ListItem>
+                      <LogoutButton onClick={onLogout}>Logout</LogoutButton>
+                    </ListItem>
+                  </List>
+                </Menu>
               </>
             ) : (
               <LoginButton onClick={onLogin}>Login</LoginButton>

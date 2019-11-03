@@ -1,7 +1,8 @@
+import { select } from '@storybook/addon-knobs';
 import React from 'react';
 import styled from 'styled-components';
 
-import { Menu, useMenuState } from '../Menu';
+import { Menu, MenuPlacement, useMenuState } from '../Menu';
 
 export default {
   title: 'molecules/Menu',
@@ -9,12 +10,24 @@ export default {
 
 export const MenuStory: React.FunctionComponent = () => {
   const menuState = useMenuState();
+  const placement = select(
+    'placement',
+    {
+      LeftTop: MenuPlacement.LEFT_TOP,
+      LeftBottom: MenuPlacement.LEFT_BOTTOM,
+      RightTop: MenuPlacement.RIGHT_TOP,
+      RightBottom: MenuPlacement.RIGHT_BOTTOM,
+      None: null,
+    },
+    null,
+    'group',
+  );
 
   return (
     <>
       <SecondaryBox onClick={menuState.onOpen} />
-      <Menu state={menuState}>
-        <PrimaryBox />
+      <Menu placement={placement !== null ? placement : undefined} state={menuState}>
+        <PrimaryBox>{placement ? MenuPlacement[placement] : 'NONE'}</PrimaryBox>
       </Menu>
     </>
   );
