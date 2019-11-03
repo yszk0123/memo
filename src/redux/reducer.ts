@@ -1,6 +1,14 @@
 import { createReducer } from 'typesafe-actions';
 import { State } from '../types/StateType';
-import { noteAdd, noteGetAll, noteRemove, noteUpdate, userLogin, userLogout } from './actions';
+import {
+  noteAdd,
+  noteGet,
+  noteGetAll,
+  noteRemove,
+  noteUpdate,
+  userLogin,
+  userLogout,
+} from './actions';
 
 export const reducer = createReducer<State>({
   user: null,
@@ -19,7 +27,13 @@ export const reducer = createReducer<State>({
   .handleAction(noteGetAll.success, (state, { payload: { notes } }) => {
     return { ...state, notes, isLoading: false };
   })
-  .handleAction(noteGetAll.failure, state => {
+  .handleAction(noteGet.request, state => {
+    return { ...state, isLoading: true };
+  })
+  .handleAction(noteGet.success, (state, { payload: { note } }) => {
+    return { ...state, notes: update(state.notes, note), isLoading: false };
+  })
+  .handleAction([noteGet.failure, noteGetAll.failure], state => {
     return { ...state, isLoading: false };
   })
   .handleAction(noteAdd.success, (state, { payload: { note } }) => {
@@ -33,3 +47,8 @@ export const reducer = createReducer<State>({
     const notes = state.notes.filter(note => note.id !== noteId);
     return { ...state, notes };
   });
+
+function update<T extends { id: string }>(values: T[], newValue: T): T[] {
+  const found = values.find(v => v.id === newValue.id) !== undefined;
+  return found ? values.map(v => (v.id === newValue.id ? newValue : v)) : [newValue, ...values];
+}

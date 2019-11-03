@@ -1,21 +1,19 @@
+import Link from 'next/link';
 import React, { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import { Note } from '../../types/NoteType';
 import { SecondaryButton } from '../atoms/Button';
+import { LineBreakableText } from '../atoms/LineBreakableText';
 import { ListItem } from '../atoms/ListItem';
 
 interface Props {
+  className?: string;
   note: Note;
-  onClick: (note: Note) => void;
   onRemove: (noteId: string) => void;
 }
 
-export const NoteView: React.FunctionComponent<Props> = ({ note, onClick, onRemove }) => {
+export const NoteView: React.FunctionComponent<Props> = ({ className, note, onRemove }) => {
   const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
-
-  const handleClick = useCallback(() => {
-    onClick(note);
-  }, [note, onClick]);
 
   const handleRemove = useCallback(
     (event: React.MouseEvent) => {
@@ -27,28 +25,50 @@ export const NoteView: React.FunctionComponent<Props> = ({ note, onClick, onRemo
   );
 
   return (
-    <Container onClick={handleClick}>
-      <Text>{note.text}</Text>
-      <CreatedAt>{createdAt}</CreatedAt>
-      <RemoveButton onClick={handleRemove}>Remove</RemoveButton>
-    </Container>
+    <Link href="/notes/[id]" as={`/notes/${note.id}`}>
+      <Container className={className}>
+        <Content>
+          <Text>
+            <LineBreakableText text={note.text} />
+          </Text>
+          <CreatedAt>{createdAt}</CreatedAt>
+        </Content>
+        <RemoveButton onClick={handleRemove}>Remove</RemoveButton>
+      </Container>
+    </Link>
   );
 };
 
 const Container = styled(ListItem)`
   display: flex;
+  align-items: center;
+  padding: var(--space);
   justify-content: space-between;
+  cursor: pointer;
+`;
+
+const Content = styled(ListItem)`
+  padding-right: var(--space);
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  height: 100%;
 `;
 
 const Text = styled.p`
   flex-grow: 1;
-  overflow-x: hidden;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 `;
 
 const CreatedAt = styled.p`
   font-size: var(--font-sm);
   min-width: 120px;
   color: var(--color-button-secondary-text--reverse);
+  margin: 0;
 `;
 
 const RemoveButton = styled(SecondaryButton)`

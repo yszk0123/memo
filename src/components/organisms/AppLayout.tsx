@@ -1,21 +1,32 @@
+import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 import css from 'styled-jsx/css';
 import { APP_NAME } from '../../constants';
-import { User } from '../../types/UserType';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useUserLogin, useUserStatusSubscribe } from '../../redux/hooks/userHooks';
+import { selectors } from '../../redux/selectors';
+import { PrimaryButton } from '../atoms/Button';
 
-interface Props {
-  user: User | null;
-}
+interface Props {}
 
-export const AppLayout: React.FunctionComponent<Props> = ({ user, children }) => {
+export const AppLayout: React.FunctionComponent<Props> = ({ children }) => {
+  const user = useTypedSelector(selectors.user);
+  const userLogin = useUserLogin();
+
+  useUserStatusSubscribe();
+
   return (
     <Container>
       <Header>
-        <p>{APP_NAME}</p>
+        <Link href="/">
+          <Home>{APP_NAME}</Home>
+        </Link>
         {user !== null && <p>{user.displayName}</p>}
       </Header>
-      <Content>{children}</Content>
+      <Content>
+        {user !== null ? children : <LoginButton onClick={userLogin}>Login</LoginButton>}
+      </Content>
       <style jsx global>
         {reset}
       </style>
@@ -25,6 +36,15 @@ export const AppLayout: React.FunctionComponent<Props> = ({ user, children }) =>
     </Container>
   );
 };
+
+const Home = styled.p`
+  cursor: pointer;
+  transition: opacity var(--transition);
+
+  &:hover {
+    opacity: var(--opacity--hover);
+  }
+`;
 
 const Container = styled.div`
   position: absolute;
@@ -47,7 +67,12 @@ const Header = styled.header`
 `;
 
 const Content = styled.main`
-  padding: var(--space);
+  width: 100%;
+  flex-grow: 1;
+`;
+
+const LoginButton = styled(PrimaryButton)`
+  margin: var(--space);
 `;
 
 const reset = css.global`
@@ -75,12 +100,13 @@ const variables = css.global`
     --space: 8px;
     --radius: 4px;
     --border-width: 1px;
+    --opacity--hover: 0.4;
 
     --font-sm: 1.4rem;
     --font-md: 1.6rem;
     --font-lg: 1.8rem;
 
-    --transition-delay: 0.2s;
+    --transition: 0.2s ease-out;
 
     /* @see https://material-ui.com/customization/color/#color-palette */
     --palette-white: #ffffff;

@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { firebase } from '../../firebase';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { createNote, Note } from '../../types/NoteType';
-import { noteAdd, noteGetAll, noteRemove, noteUpdate } from '../actions';
+import { noteAdd, noteGet, noteGetAll, noteRemove, noteUpdate } from '../actions';
 import { selectors } from '../selectors';
 import { getAllFromSnapshot } from '../utils/getAllFromSnapshot';
+import { getFromSnapshot } from '../utils/getFromSnapshot';
 import { unwrapDocumentData } from '../utils/unwrapDocumentData';
 
 export function useNoteAdd() {
@@ -76,6 +77,36 @@ export function useNoteRemove() {
       await noteRef.delete();
 
       dispatch(noteRemove.success(noteId));
+    },
+    [user, dispatch],
+  );
+}
+
+export function useNoteGet() {
+  const dispatch = useDispatch();
+  const user = useTypedSelector(selectors.user);
+
+  return useCallback(
+    async (noteId: string) => {
+      if (user === null) {
+        return;
+      }
+
+      dispatch(noteGet.request());
+
+      const db = firebase.firestore();
+      try {
+        const noteRef = await db.doc(`notes/${noteId}`).get();
+        const note = getFromSnapshot<Note>(noteRef);
+
+        if (note !== null) {
+          dispatch(noteGet.success(note));
+        } else {
+          dispatch(noteGet.failure());
+        }
+      } catch (error) {
+        dispatch(noteGet.failure());
+      }
     },
     [user, dispatch],
   );
