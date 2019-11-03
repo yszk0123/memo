@@ -5,6 +5,7 @@ import {
   noteGet,
   noteGetAll,
   noteRemove,
+  noteSubscribeAll,
   noteUpdate,
   userLogin,
   userLogout,
@@ -26,6 +27,9 @@ export const reducer = createReducer<State>({
   })
   .handleAction(noteGetAll.success, (state, { payload: { notes } }) => {
     return { ...state, notes, isLoading: false };
+  })
+  .handleAction(noteSubscribeAll.success, (state, { payload: { notes } }) => {
+    return { ...state, notes: updateAll(state.notes, notes), isLoading: false };
   })
   .handleAction(noteGet.request, state => {
     return { ...state, isLoading: true };
@@ -51,4 +55,13 @@ export const reducer = createReducer<State>({
 function update<T extends { id: string }>(values: T[], newValue: T): T[] {
   const found = values.find(v => v.id === newValue.id) !== undefined;
   return found ? values.map(v => (v.id === newValue.id ? newValue : v)) : [newValue, ...values];
+}
+
+function updateAfter<T extends { id: string }>(values: T[], newValue: T): T[] {
+  const found = values.find(v => v.id === newValue.id) !== undefined;
+  return found ? values.map(v => (v.id === newValue.id ? newValue : v)) : [...values, newValue];
+}
+
+function updateAll<T extends { id: string }>(values: T[], newValues: T[]): T[] {
+  return newValues.reduce((acc, newValue) => updateAfter(acc, newValue), values);
 }

@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { firebase } from '../../firebase';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { createNote, Note } from '../../types/NoteType';
-import { noteAdd, noteGet, noteGetAll, noteRemove, noteUpdate } from '../actions';
+import { noteAdd, noteGet, noteGetAll, noteRemove, noteSubscribeAll, noteUpdate } from '../actions';
 import { selectors } from '../selectors';
 import { getAllFromSnapshot } from '../utils/getAllFromSnapshot';
 import { getFromSnapshot } from '../utils/getFromSnapshot';
@@ -135,5 +135,31 @@ export function useNoteGetAll() {
     const notes = getAllFromSnapshot<Note>(snapshot);
 
     dispatch(noteGetAll.success(notes));
+  }, [user, dispatch]);
+}
+
+export function useNoteSubscribeAll() {
+  const dispatch = useDispatch();
+  const user = useTypedSelector(selectors.user);
+
+  return useEffect(() => {
+    if (user === null) {
+      return;
+    }
+
+    dispatch(noteSubscribeAll.request());
+
+    const db = firebase.firestore();
+    const unsubscribe = db
+      .collection('notes')
+      .where('authorId', '==', user.id)
+      .orderBy('createdAt', 'desc')
+      .onSnapshot(snapshot => {
+        const notes = getAllFromSnapshot<Note>(snapshot);
+
+        dispatch(noteSubscribeAll.success(notes));
+      });
+
+    return unsubscribe;
   }, [user, dispatch]);
 }

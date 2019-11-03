@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { PrimaryFab } from '../src/components/atoms/Fab';
@@ -8,7 +8,7 @@ import { AppLayout } from '../src/components/organisms/AppLayout';
 import { NoteList } from '../src/components/organisms/NoteList';
 import { useGlobalKeyboardShortcut } from '../src/hooks/useGlobalKeyboardShortcut';
 import { useTypedSelector } from '../src/hooks/useTypedSelector';
-import { useNoteGetAll, useNoteRemove } from '../src/redux/hooks/noteHooks';
+import { useNoteRemove, useNoteSubscribeAll } from '../src/redux/hooks/noteHooks';
 import { selectors } from '../src/redux/selectors';
 import { noop } from '../src/utils/noop';
 
@@ -22,11 +22,7 @@ const Index: NextPage<Props> = () => {
 
   const noteRemove = useNoteRemove();
 
-  const noteGetAll = useNoteGetAll();
-
-  useEffect(() => {
-    noteGetAll();
-  }, [noteGetAll]);
+  useNoteSubscribeAll();
 
   useGlobalKeyboardShortcut({
     dispatch,

@@ -37,3 +37,8 @@ export const noteGetAll = createAsyncAction(
   ['note/getAll/success', (notes: Note[]) => ({ notes })],
   ['note/getAll/failure', undefined],
 )();
+export const noteSubscribeAll = createAsyncAction(
+  ['note/subscribeAll/request', undefined],
+  ['note/subscribeAll/success', (notes: Note[]) => ({ notes })],
+  ['note/subscribeAll/failure', undefined],
+)();
