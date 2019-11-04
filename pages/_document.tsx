@@ -2,11 +2,11 @@
  * @see https://www.styled-components.com/docs/advanced#nextjs
  * @see https://github.com/zeit/next.js/blob/e03266008c41b2fbad3214f586ace15a98ea7467/examples/with-styled-components/pages/_document.js
  */
-import Document from 'next/document';
+import Document, { DocumentInitialProps, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: any) {
+  static async getInitialProps(ctx: any): Promise<DocumentInitialProps> {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -29,5 +29,19 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+
+  render(): JSX.Element {
+    return (
+      <html>
+        <Head />
+        <body>
+          <Main />
+          {/* here we will mount our modal portal */}
+          <div id="modal" />
+          <NextScript />
+        </body>
+      </html>
+    );
   }
 }

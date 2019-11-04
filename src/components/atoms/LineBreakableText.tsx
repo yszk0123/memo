@@ -9,7 +9,7 @@ export const LineBreakableText: React.FunctionComponent<Props> = ({ text, maxLin
   return useMemo(() => {
     const result: React.ReactNode = join(text.split(/\r?\n/), maxLines);
     return <>{result}</>;
-  }, [text]);
+  }, [maxLines, text]);
 };
 
 function join<T>(lines: T[], max?: number): React.ReactNode[] {

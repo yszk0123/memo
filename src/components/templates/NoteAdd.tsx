@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+
 import { Note } from '../../types/NoteType';
 import { SecondaryButton } from '../atoms/Button';
 import { PrimaryFab, SecondaryFab } from '../atoms/Fab';
 import { GoogleMaps } from '../atoms/GoogleMaps';
 import { TextArea } from '../atoms/TextArea';
-import { AppLayout } from '../organisms/AppLayout';
+import { AppLayout } from './AppLayout';
 
 const MIN_HEIGHT = 300;
 
@@ -54,7 +55,7 @@ export const NoteAdd: React.FunctionComponent<Props> = ({
       <UpdateFab disabled={disabled} onClick={handleSubmit}>
         Update
       </UpdateFab>
-      <MapFab onClick={handleToggleMap} className={isMap ? undefined : 'hidden'}>
+      <MapFab className={isMap ? undefined : 'hidden'} onClick={handleToggleMap}>
         Map
       </MapFab>
     </AppLayout>

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Coordinate } from '../../types/CoordinateType';
 
 interface Props {

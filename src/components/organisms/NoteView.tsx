@@ -1,23 +1,26 @@
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+
 import { Note } from '../../types/NoteType';
 import { LineBreakableText } from '../atoms/LineBreakableText';
-import { ListItem } from '../atoms/ListItem';
+import { TouchableListItem } from '../atoms/ListItem';
 import { pad2 } from './pad2';
 
 interface Props {
   className?: string;
   style?: React.CSSProperties;
   note: Note;
+
+  // FIXME: Implement with Menu component
   onRemove: (noteId: string) => void;
 }
 
-export const NoteView: React.FunctionComponent<Props> = ({ className, style, note, onRemove }) => {
+export const NoteView: React.FunctionComponent<Props> = ({ className, style, note }) => {
   const createdAt = useMemo(() => formatTime(note.createdAt), [note]);
 
   return (
-    <Link href="/notes/[id]" as={`/notes/${note.id}`}>
+    <Link as={`/notes/${note.id}`} href="/notes/[id]">
       <Container className={className} style={style}>
         <Content>
           <Text>
@@ -30,7 +33,7 @@ export const NoteView: React.FunctionComponent<Props> = ({ className, style, not
   );
 };
 
-const Container = styled(ListItem)`
+const Container = styled(TouchableListItem)`
   display: flex;
   align-items: center;
   padding: var(--space);
@@ -38,7 +41,7 @@ const Container = styled(ListItem)`
   cursor: pointer;
 `;
 
-const Content = styled(ListItem)`
+const Content = styled(TouchableListItem)`
   padding-right: var(--space);
   display: flex;
   flex-grow: 1;

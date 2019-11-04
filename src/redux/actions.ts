@@ -1,4 +1,5 @@
-import { createAsyncAction } from 'typesafe-actions';
+import { createAction, createAsyncAction } from 'typesafe-actions';
+
 import { Note } from '../types/NoteType';
 import { User } from '../types/UserType';
 
@@ -12,6 +13,8 @@ export const userLogout = createAsyncAction(
   ['user/logout/success', undefined],
   ['user/logout/failure', undefined],
 )();
+
+export const noteReset = createAction('note/reset')();
 export const noteRemove = createAsyncAction(
   ['note/remove/request', (noteId: string) => ({ noteId })],
   ['note/remove/success', (noteId: string) => ({ noteId })],

@@ -5,10 +5,13 @@ interface Props extends HTMLProps<HTMLInputElement> {
   className?: string;
 }
 
-export const ListItem = styled.div<Props>`
+export const TouchableListItem = styled.div<Props>`
   transition: background-color var(--transition);
+  cursor: pointer;
 
   &:hover {
     background-color: var(--color-default--hover);
   }
 `;
+
+export const ListItem = styled.div<Props>``;

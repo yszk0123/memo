@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+
 import { Note } from '../../types/NoteType';
 import { GroupVirtualList } from '../molecules/GroupVirtualList';
 import { NoteView } from './NoteView';
@@ -38,16 +39,16 @@ export const NoteList: React.FunctionComponent<Props> = ({
   return (
     <GroupVirtualList
       className={className}
+      getKey={getKey}
       items={notes}
       itemSize={ITEM_SIZE}
-      stickyItemSize={STICKY_ITEM_SIZE}
-      getKey={getKey}
       renderItem={note => {
         return <Item key={note.id} note={note} onRemove={onRemove} />;
       }}
       renderStickyItem={(note, key) => {
         return <StickyItem key={note.id}>{key}</StickyItem>;
       }}
+      stickyItemSize={STICKY_ITEM_SIZE}
       onFetchMore={handleFetchMore}
     />
   );

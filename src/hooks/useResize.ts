@@ -4,13 +4,13 @@ const DELAY = 400;
 
 function debounce(callback: () => void, delay: number): () => void {
   let timeoutId: number | null = null;
-  function reset() {
+  function reset(): void {
     if (timeoutId !== null) {
       clearTimeout(timeoutId);
       timeoutId = null;
     }
   }
-  function debounced() {
+  function debounced(): () => void {
     reset();
     timeoutId = self.setTimeout(() => {
       callback();

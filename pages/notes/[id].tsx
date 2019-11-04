@@ -1,7 +1,8 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
-import { AppLayout } from '../../src/components/organisms/AppLayout';
+
+import { AppLayout } from '../../src/components/templates/AppLayout';
 import { NoteAdd } from '../../src/components/templates/NoteAdd';
 import { useTypedSelector } from '../../src/hooks/useTypedSelector';
 import { useNoteGet, useNoteRemove, useNoteUpdate } from '../../src/redux/hooks/noteHooks';
@@ -31,7 +32,7 @@ const NotesShow: NextPage<Props> = () => {
       noteRemove(noteId);
       router.push('/');
     }
-  }, [noteId, noteRemove]);
+  }, [noteId, noteRemove, router]);
 
   useEffect(() => {
     if (note === null && noteId !== null) {
@@ -51,8 +52,8 @@ const NotesShow: NextPage<Props> = () => {
     <NoteAdd
       initialText={note.text}
       note={note}
-      onSubmit={handleNoteUpdate}
       onRemove={handleNoteRemove}
+      onSubmit={handleNoteUpdate}
     />
   );
 };
