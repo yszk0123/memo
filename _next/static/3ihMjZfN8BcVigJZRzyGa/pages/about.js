@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{"8xRS":function(n,t,u){(window.__NEXT_P=window.__NEXT_P||[]).push(["/about",function(){return u("jXL8")}])},jXL8:function(n,t,u){"use strict";u.r(t);var o=u("q1tI"),e=u.n(o),w=u("FLDa"),a=e.a.createElement;t.default=function(){return a(w.a,null,"TBD")}}},[["8xRS",1,0]]]);
