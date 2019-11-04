@@ -6,6 +6,7 @@ import {
   noteGet,
   noteGetAll,
   noteRemove,
+  noteReset,
   noteSubscribeAll,
   noteUpdate,
   userLogin,
@@ -22,6 +23,9 @@ export const reducer = createReducer<State>({
   })
   .handleAction(userLogout.success, state => {
     return { ...state, user: null };
+  })
+  .handleAction(noteReset, state => {
+    return { ...state, notes: [] };
   })
   .handleAction(noteGetAll.request, state => {
     return { ...state, isLoading: true };

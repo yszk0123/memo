@@ -1,22 +1,18 @@
 import classNames from 'classnames';
 import React, { useCallback, useMemo, useState } from 'react';
-import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 import { Position } from '../../types/GeometoryType';
 import { Paper } from '../atoms/Paper';
+import { Portal } from '../atoms/Portal';
 
 export enum MenuPlacement {
   LEFT_TOP = 'LEFT_TOP',
   LEFT_BOTTOM = 'LEFT_BOTTOM',
   RIGHT_TOP = 'RIGHT_TOP',
   RIGHT_BOTTOM = 'RIGHT_BOTTOM',
+  BOTTOM = 'BOTTOM',
 }
-
-const stop = (event: React.SyntheticEvent): void => {
-  event.stopPropagation();
-  event.preventDefault();
-};
 
 interface MenuProps extends React.ComponentProps<typeof Paper> {
   placement?: MenuPlacement;
@@ -63,7 +59,6 @@ export function useMenuState(): MenuState {
 interface Props extends React.ComponentProps<typeof Paper> {
   isOpen: boolean;
   position: Position | null;
-  mountAt?: HTMLElement;
   placement?: MenuPlacement;
   onClose?: () => void;
 }
@@ -72,7 +67,6 @@ const BareMenu: React.FunctionComponent<Props> = ({
   ref: _ref,
   isOpen,
   position,
-  mountAt,
   placement = MenuPlacement.RIGHT_BOTTOM,
   onClose,
   ...props
@@ -81,8 +75,8 @@ const BareMenu: React.FunctionComponent<Props> = ({
     return position !== null ? { left: position.x, top: position.y } : undefined;
   }, [position]);
 
-  return ReactDOM.createPortal(
-    <>
+  return (
+    <Portal selector="#modal">
       {isOpen && <Sheet onClick={onClose} />}
       <MainWrapper
         className={classNames({
@@ -91,14 +85,13 @@ const BareMenu: React.FunctionComponent<Props> = ({
           leftBottom: placement === MenuPlacement.LEFT_BOTTOM,
           rightTop: placement === MenuPlacement.RIGHT_TOP,
           rightBottom: placement === MenuPlacement.RIGHT_BOTTOM,
+          bottom: placement === MenuPlacement.BOTTOM,
         })}
         style={style}
-        onClick={stop}
       >
         <Main {...props} />
       </MainWrapper>
-    </>,
-    mountAt || document.body,
+    </Portal>
   );
 };
 
@@ -140,6 +133,12 @@ const MainWrapper = styled(Paper)`
     transform: translate(0, 0);
     &.hidden {
       transform: translate(calc(-1 * var(--menu-offset-x)), calc(-1 * var(--menu-offset-y)));
+    }
+  }
+  &.bottom {
+    transform: translate(-50%, 0);
+    &.hidden {
+      transform: translate(calc(-50%), calc(-1 * var(--menu-offset-y)));
     }
   }
 

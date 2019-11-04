@@ -15,11 +15,18 @@ const DEFAULT_DISPLAY_NAME = '-';
 
 interface Props {
   user: User | null;
+  center?: React.ReactNode;
   onLogin: () => void;
   onLogout: () => void;
 }
 
-export const Layout: React.FunctionComponent<Props> = ({ children, user, onLogin, onLogout }) => {
+export const Layout: React.FunctionComponent<Props> = ({
+  children,
+  center,
+  user,
+  onLogin,
+  onLogout,
+}) => {
   const menuState = useMenuState();
 
   return (
@@ -29,6 +36,7 @@ export const Layout: React.FunctionComponent<Props> = ({ children, user, onLogin
           <Left>
             <HeadingLink href="/">{APP_NAME}</HeadingLink>
           </Left>
+          {center}
           <Right>
             {user !== null ? (
               <>

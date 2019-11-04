@@ -16,6 +16,7 @@ export const MenuStory: React.FunctionComponent = () => {
       LeftBottom: MenuPlacement.LEFT_BOTTOM,
       RightTop: MenuPlacement.RIGHT_TOP,
       RightBottom: MenuPlacement.RIGHT_BOTTOM,
+      Bottom: MenuPlacement.BOTTOM,
     },
     MenuPlacement.RIGHT_BOTTOM,
   );

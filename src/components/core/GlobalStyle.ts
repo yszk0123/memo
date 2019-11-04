@@ -30,6 +30,7 @@ export const GlobalStyle = createGlobalStyle`
     --fab-size: 48px;
     --avatar-size: 36px;
     --header-height: 52px;
+    --subheader-height: 36px;
 
     --font-sm: 1.4rem;
     --font-md: 1.6rem;

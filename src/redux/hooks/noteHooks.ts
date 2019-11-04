@@ -4,7 +4,15 @@ import { useDispatch } from 'react-redux';
 import { firebase } from '../../firebase';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { createNote, Note } from '../../types/NoteType';
-import { noteAdd, noteGet, noteGetAll, noteRemove, noteSubscribeAll, noteUpdate } from '../actions';
+import {
+  noteAdd,
+  noteGet,
+  noteGetAll,
+  noteRemove,
+  noteReset,
+  noteSubscribeAll,
+  noteUpdate,
+} from '../actions';
 import { selectors } from '../selectors';
 import { getAllFromSnapshot } from '../utils/getAllFromSnapshot';
 import { getFromSnapshot } from '../utils/getFromSnapshot';
@@ -120,10 +128,15 @@ export function useNoteGet(): (noteId: string) => void {
 
 type Cursor = firebase.firestore.QueryDocumentSnapshot;
 
-export function useNoteGetAll(): () => Promise<void> {
+export function useNoteGetAll(dateBefore?: number | null): () => Promise<void> {
   const dispatch = useDispatch();
   const user = useTypedSelector(selectors.user);
   const cursorRef = useRef<Cursor | null>(null);
+
+  useEffect(() => {
+    cursorRef.current = null;
+    dispatch(noteReset());
+  }, [dateBefore, dispatch]);
 
   return useCallback(async () => {
     if (user === null) {
@@ -141,6 +154,9 @@ export function useNoteGetAll(): () => Promise<void> {
     if (cursorRef.current !== null) {
       notesRef = notesRef.startAfter(cursorRef.current);
     }
+    if (dateBefore != null) {
+      notesRef = notesRef.where('createdAt', '<=', dateBefore);
+    }
     // Store original reference before calling async functions
     const ref = cursorRef;
     const snapshot: firebase.firestore.QuerySnapshot = await notesRef.get();
@@ -148,7 +164,7 @@ export function useNoteGetAll(): () => Promise<void> {
     ref.current = snapshot.docs[snapshot.docs.length - 1] || null;
 
     dispatch(noteGetAll.success(notes));
-  }, [user, dispatch]);
+  }, [user, dispatch, dateBefore]);
 }
 
 /**
