@@ -17,7 +17,7 @@ export const LayoutWithLogoutStory: React.FunctionComponent = () => {
 };
 
 export const LayoutWithLoginStory: React.FunctionComponent = () => {
-  const user: User = { id: 'id-1', displayName: 'foo' };
+  const user: User = { id: 'id-1', displayName: 'Jonh Smith' };
   return (
     <Layout user={user} onLogin={action('onLogin')} onLogout={action('onLogout')}>
       Content

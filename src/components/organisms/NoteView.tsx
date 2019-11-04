@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Note } from '../../types/NoteType';
 import { LineBreakableText } from '../atoms/LineBreakableText';
-import { ListItem } from '../atoms/ListItem';
+import { TouchableListItem } from '../atoms/ListItem';
 import { pad2 } from './pad2';
 
 interface Props {
@@ -33,7 +33,7 @@ export const NoteView: React.FunctionComponent<Props> = ({ className, style, not
   );
 };
 
-const Container = styled(ListItem)`
+const Container = styled(TouchableListItem)`
   display: flex;
   align-items: center;
   padding: var(--space);
@@ -41,7 +41,7 @@ const Container = styled(ListItem)`
   cursor: pointer;
 `;
 
-const Content = styled(ListItem)`
+const Content = styled(TouchableListItem)`
   padding-right: var(--space);
   display: flex;
   flex-grow: 1;

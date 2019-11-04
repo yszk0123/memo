@@ -27,6 +27,9 @@ export const GlobalStyle = createGlobalStyle`
     --opacity--hover: 0.4;
     --menu-offset-x: calc(var(--space) / 2);
     --menu-offset-y: calc(var(--space));
+    --fab-size: 48px;
+    --avatar-size: 36px;
+    --header-height: 52px;
 
     --font-sm: 1.4rem;
     --font-md: 1.6rem;

@@ -18,7 +18,7 @@ const stop = (event: React.SyntheticEvent): void => {
   event.preventDefault();
 };
 
-interface MenuProps extends React.Props<typeof Paper> {
+interface MenuProps extends React.ComponentProps<typeof Paper> {
   placement?: MenuPlacement;
   state: MenuState;
 }
@@ -60,7 +60,7 @@ export function useMenuState(): MenuState {
   ]);
 }
 
-interface Props extends React.Props<typeof Paper> {
+interface Props extends React.ComponentProps<typeof Paper> {
   isOpen: boolean;
   position: Position | null;
   mountAt?: HTMLElement;

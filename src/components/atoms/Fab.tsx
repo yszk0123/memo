@@ -8,8 +8,8 @@ interface Props {
 }
 
 const Fab = styled.button<Props>`
-  width: 48px;
-  height: 48px;
+  width: var(--fab-size);
+  height: var(--fab-size);
   padding: var(--space);
   border-width: var(--border-width);
   border-radius: 50%;

@@ -3,12 +3,15 @@ import styled from 'styled-components';
 
 import { APP_NAME } from '../../constants';
 import { User } from '../../types/UserType';
+import { InitialAvatar } from '../atoms/Avatar';
 import { DefaultButton } from '../atoms/Button';
 import { List } from '../atoms/List';
-import { ListItem } from '../atoms/ListItem';
+import { ListItem, TouchableListItem } from '../atoms/ListItem';
 import { HeadingLink } from '../atoms/TextLink';
-import { Menu, MenuPlacement,useMenuState } from '../molecules/Menu';
+import { Menu, MenuPlacement, useMenuState } from '../molecules/Menu';
 import { GlobalStyle } from './GlobalStyle';
+
+const DEFAULT_DISPLAY_NAME = '-';
 
 interface Props {
   user: User | null;
@@ -29,12 +32,18 @@ export const Layout: React.FunctionComponent<Props> = ({ children, user, onLogin
           <Right>
             {user !== null ? (
               <>
-                <DisplayName onClick={menuState.onOpen}>{user.displayName}</DisplayName>
+                <UserAvatar
+                  text={user.displayName || DEFAULT_DISPLAY_NAME}
+                  onClick={menuState.onOpen}
+                />
                 <Menu placement={MenuPlacement.LEFT_BOTTOM} state={menuState}>
                   <List>
                     <ListItem>
-                      <LogoutButton onClick={onLogout}>Logout</LogoutButton>
+                      <SecondaryText>Logged in as {user.displayName}</SecondaryText>
                     </ListItem>
+                    <TouchableListItem>
+                      <Text onClick={onLogout}>Logout</Text>
+                    </TouchableListItem>
                   </List>
                 </Menu>
               </>
@@ -59,12 +68,24 @@ const Container = styled.div`
   font-size: var(--font-md);
 `;
 
+const UserAvatar = styled(InitialAvatar)`
+  transition: background-color var(--transition);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-default--hover);
+  }
+`;
+
 const Header = styled.header`
+  display: flex;
+  align-items: center;
   background-color: var(--color-button-primary);
   padding: var(--space) calc(var(--space) * 2);
   color: var(--color-button-primary-text);
   box-shadow: 0 1px 1px 0 var(--color-shadow);
   width: 100%;
+  height: var(--header-height);
 `;
 
 const Nav = styled.nav`
@@ -77,10 +98,6 @@ const Nav = styled.nav`
 const Content = styled.main`
   width: 100%;
   flex-grow: 1;
-`;
-
-const DisplayName = styled.p`
-  margin: 0;
 `;
 
 const Left = styled.div`
@@ -97,6 +114,13 @@ const LoginButton = styled(DefaultButton)`
   margin-left: var(--space);
 `;
 
-const LogoutButton = styled(DefaultButton)`
-  margin-left: var(--space);
+const Text = styled.p`
+  white-space: nowrap;
+  font-size: var(--font-md);
+  margin: 0;
+  padding: var(--space) calc(var(--space) * 2);
+`;
+
+const SecondaryText = styled(Text)`
+  color: var(--color-secondary-text);
 `;
