@@ -15,7 +15,7 @@ export async function createNote(doc: Doc, authorId: string, text: string): Prom
   let coordinate: Coordinate | null = null;
   try {
     coordinate = await getCurrentPositionFromGeoLocation();
-  } catch (error) {
+  } catch {
     /* nothing */
   }
 

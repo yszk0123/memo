@@ -161,7 +161,7 @@ export function useNoteGetAll(dateBefore?: number | null): () => Promise<void> {
     const ref = cursorRef;
     const snapshot: firebase.firestore.QuerySnapshot = await notesRef.get();
     const notes = getAllFromSnapshot<Note>(snapshot);
-    ref.current = snapshot.docs[snapshot.docs.length - 1] || null;
+    ref.current = snapshot.docs[snapshot.docs.length - 1] ?? null;
 
     dispatch(noteGetAll.success(notes));
   }, [user, dispatch, dateBefore]);

@@ -10,5 +10,5 @@ export function select2<T>(
 ): T | null {
   const keys = Object.keys(map);
   const key = select(name, keys, defaultValue, groupId);
-  return map[key] || null;
+  return map[key] ?? null;
 }

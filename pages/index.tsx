@@ -56,7 +56,7 @@ const Index: NextPage<Props> = () => {
           <ListItem>
             <TextInput
               type="date"
-              value={dateBeforeString || ''}
+              value={dateBeforeString ?? ''}
               onChange={noop}
               onInput={handleUpdateDateBefore}
             ></TextInput>
@@ -102,7 +102,7 @@ const Loading = styled.div`
 function getTime(dateString: string): number | null {
   try {
     return new Date(dateString).getTime();
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -115,7 +115,7 @@ function format(date: number | null): string | null {
   try {
     const d = new Date(date);
     return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

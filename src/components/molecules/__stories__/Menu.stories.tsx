@@ -25,7 +25,7 @@ export const MenuStory: React.FunctionComponent = () => {
   return (
     <div>
       <SecondaryBox onClick={menuState.onOpen} />
-      <Menu placement={placement !== null ? placement : undefined} state={menuState}>
+      <Menu placement={placement ?? undefined} state={menuState}>
         <PrimaryBox>{placement}</PrimaryBox>
       </Menu>
     </div>
