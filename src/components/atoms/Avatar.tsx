@@ -11,15 +11,11 @@ export const Avatar = styled.div`
   overflow: hidden;
 `;
 
-interface InitialAvatarProps extends React.ComponentProps<typeof Avatar> {
+interface InitialAvatarProps extends React.ComponentPropsWithoutRef<typeof Avatar> {
   text: string;
 }
 
-export const InitialAvatar: React.FunctionComponent<InitialAvatarProps> = ({
-  ref: _ref,
-  text,
-  ...props
-}) => {
+export const InitialAvatar: React.FunctionComponent<InitialAvatarProps> = ({ text, ...props }) => {
   const initial = useMemo(() => {
     const parts = text.split(/\s+/);
     if (parts.length >= 2) {

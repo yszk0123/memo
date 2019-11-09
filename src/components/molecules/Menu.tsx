@@ -14,7 +14,7 @@ export enum MenuPlacement {
   BOTTOM = 'BOTTOM',
 }
 
-interface MenuProps extends React.ComponentProps<typeof Paper> {
+interface MenuProps extends React.ComponentPropsWithoutRef<typeof Paper> {
   placement?: MenuPlacement;
   state: MenuState;
 }
@@ -56,7 +56,7 @@ export function useMenuState(): MenuState {
   ]);
 }
 
-interface Props extends React.ComponentProps<typeof Paper> {
+interface Props extends React.ComponentPropsWithoutRef<typeof Paper> {
   isOpen: boolean;
   position: Position | null;
   placement?: MenuPlacement;
@@ -64,7 +64,6 @@ interface Props extends React.ComponentProps<typeof Paper> {
 }
 
 const BareMenu: React.FunctionComponent<Props> = ({
-  ref: _ref,
   isOpen,
   position,
   placement = MenuPlacement.RIGHT_BOTTOM,

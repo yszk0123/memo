@@ -41,7 +41,7 @@ export const Layout: React.FunctionComponent<Props> = ({
             {user !== null ? (
               <>
                 <UserAvatar
-                  text={user.displayName || DEFAULT_DISPLAY_NAME}
+                  text={user.displayName ?? DEFAULT_DISPLAY_NAME}
                   onClick={menuState.onOpen}
                 />
                 <Menu placement={MenuPlacement.LEFT_BOTTOM} state={menuState}>

@@ -46,7 +46,7 @@ export const NoteAdd: React.FunctionComponent<Props> = ({
       <Content>
         <ContentText autoFocus value={text} onChange={handleChange} />
         <RemoveButton onClick={onRemove}>Remove</RemoveButton>
-        {note != null && note.coordinate != null && isMap && (
+        {note?.coordinate != null && isMap && (
           <Map>
             <GoogleMaps coordinate={note.coordinate} />
           </Map>
