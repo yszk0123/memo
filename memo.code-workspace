@@ -35,6 +35,7 @@
       "javascriptreact",
       {"language": "typescript", "autoFix": true },
       {"language": "typescriptreact", "autoFix": true }
-    ]
+    ],
+    "typescript.tsdk": "node_modules/typescript/lib"
   }
 }
