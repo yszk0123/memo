@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Paper } from '../atoms/Paper';
 
-interface Props extends React.ComponentProps<typeof Paper> {
+interface Props extends React.ComponentPropsWithoutRef<typeof Paper> {
   className?: string;
 }
 
@@ -19,7 +19,7 @@ export const DialogActions = styled.div<Props>`
   justify-content: flex-end;
 `;
 
-export const Dialog: React.FunctionComponent<Props> = ({ ref: _ref, ...props }) => {
+export const Dialog: React.FunctionComponent<Props> = props => {
   return ReactDOM.createPortal(
     <Outer>
       <Sheet />
