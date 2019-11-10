@@ -1,4 +1,7 @@
 {
   "presets": ["next/babel"],
-  "plugins": [["styled-components", { "ssr": true }]]
+  "plugins": [
+    "@babel/plugin-proposal-nullish-coalescing-operator",
+    ["styled-components", { "ssr": true }]
+  ]
 }
