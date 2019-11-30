@@ -14,7 +14,7 @@ interface Props<T extends Item> {
   renderItem: (item: T) => React.ReactElement;
   renderStickyItem: (item: T, key: string) => React.ReactElement;
   onFetchMore: (itemId: string) => void;
-  getKey: (item: T) => string;
+  getKey: (item: T, index: number) => string;
 }
 
 interface Sticky<T extends Item> {
@@ -43,7 +43,7 @@ export function GroupVirtualList<T extends Item>({
     let lastKey: string | null = null;
     for (let i = 0; i < itemCount; i += 1) {
       const item = items[i];
-      const key = getKey(item);
+      const key = getKey(item, i);
       if (key !== lastKey) {
         lastKey = key;
         const sticky: Sticky<T> = { key, item, _: 'sticky' };
