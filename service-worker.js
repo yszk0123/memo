@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "revision": "95aa6a2ae6e929063b13"
   },
   {
-    "url": "/memo/_next/static/runtime/main-cdb7a64c709920981932.js",
-    "revision": "4c2a86ab34ea1f6bded0"
+    "url": "/memo/_next/static/runtime/main-4de8ab084ff34d90993e.js",
+    "revision": "8d7804d24a970cf486b7"
   },
   {
     "url": "/memo/_next/static/runtime/polyfills-25502109c8842b40df6e.js",
@@ -16,28 +16,28 @@ self.__precacheManifest = [
     "revision": "fc489b339eb65f8713fe"
   },
   {
-    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/_app.js",
-    "revision": "09b69d20595de8135126"
+    "url": "/memo/_next/static/vKkLLkf1ysfTv5Bq-_rAj/pages/_app.js",
+    "revision": "f75e6dd7069cbb6eb6f8"
   },
   {
-    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/_error.js",
-    "revision": "ed12709c35626b2e2a58"
+    "url": "/memo/_next/static/vKkLLkf1ysfTv5Bq-_rAj/pages/_error.js",
+    "revision": "9a4770d6f7a682bbb77a"
   },
   {
-    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/about.js",
-    "revision": "9c522b628d6221b5a8d5"
+    "url": "/memo/_next/static/vKkLLkf1ysfTv5Bq-_rAj/pages/about.js",
+    "revision": "250670a02be507e799e1"
   },
   {
-    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/index.js",
-    "revision": "ec30ee6282a9adb27349"
+    "url": "/memo/_next/static/vKkLLkf1ysfTv5Bq-_rAj/pages/index.js",
+    "revision": "774eeacfce4ef559664a"
   },
   {
-    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/notes.js",
-    "revision": "92997923bd6200e6fbe4"
+    "url": "/memo/_next/static/vKkLLkf1ysfTv5Bq-_rAj/pages/notes.js",
+    "revision": "49798969041f97f16107"
   },
   {
-    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/notes/[id].js",
-    "revision": "555fe339b8a130b3289a"
+    "url": "/memo/_next/static/vKkLLkf1ysfTv5Bq-_rAj/pages/notes/[id].js",
+    "revision": "10319890de9664e10b77"
   }
 ];
 
@@ -71,5 +71,16 @@ self.addEventListener('message', (event) => {
  * requests for URLs in the manifest.
  * See https://goo.gl/S9QRab
  */
-self.__precacheManifest = [].concat(self.__precacheManifest || []);
+self.__precacheManifest = [
+  {
+    "url": "static/icon.png",
+    "revision": "72d4dcfe45c0ff2b9c37a702f9a91c54"
+  },
+  {
+    "url": "static/manifest.json",
+    "revision": "557c08a97d9357fbd58d4b1820d6649e"
+  }
+].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
+workbox.routing.registerRoute(/^https?.*/, new workbox.strategies.NetworkFirst({ "cacheName":"offlineCache", plugins: [new workbox.expiration.Plugin({ maxEntries: 200, purgeOnQuotaError: false })] }), 'GET');
