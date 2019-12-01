@@ -34,7 +34,10 @@ export default class MyDocument extends Document {
   render(): JSX.Element {
     return (
       <html>
-        <Head />
+        <Head>
+          <meta content="#000000" name="theme-color" />
+          <link href="/memo/static/manifest.json" rel="manifest" />
+        </Head>
         <body>
           <Main />
           {/* here we will mount our modal portal */}
