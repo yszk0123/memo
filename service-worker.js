@@ -1,35 +1,35 @@
 self.__precacheManifest = [
   {
-    "url": "/memo/_next/static/MZ2S-yXwHn2SL_EkEOWxY/pages/_app.js",
-    "revision": "d1e6b927438016233d79"
+    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/_app.js",
+    "revision": "08266b0a8a2842448e92"
   },
   {
-    "url": "/memo/_next/static/MZ2S-yXwHn2SL_EkEOWxY/pages/_error.js",
-    "revision": "3716c99606022416492f"
+    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/_error.js",
+    "revision": "4db9d005e0a648c1ad23"
   },
   {
-    "url": "/memo/_next/static/MZ2S-yXwHn2SL_EkEOWxY/pages/about.js",
-    "revision": "234197a5a9a4acc52d29"
+    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/about.js",
+    "revision": "1902cacdc0d51e07265f"
   },
   {
-    "url": "/memo/_next/static/MZ2S-yXwHn2SL_EkEOWxY/pages/index.js",
-    "revision": "99dce85389a665750dc4"
+    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/index.js",
+    "revision": "2fe212b3fefdb8af1d59"
   },
   {
-    "url": "/memo/_next/static/MZ2S-yXwHn2SL_EkEOWxY/pages/notes.js",
-    "revision": "d38b85849bb9a7cb894c"
+    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/notes.js",
+    "revision": "710d03100a99394c5006"
   },
   {
-    "url": "/memo/_next/static/MZ2S-yXwHn2SL_EkEOWxY/pages/notes/[id].js",
-    "revision": "bef1430eda5108a376e2"
+    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/notes/[id].js",
+    "revision": "b676a29241d729b8048d"
   },
   {
     "url": "/memo/_next/static/chunks/commons.d98bbcd905afc63e586e.js",
     "revision": "95aa6a2ae6e929063b13"
   },
   {
-    "url": "/memo/_next/static/runtime/main-dccbff7944a56308e574.js",
-    "revision": "4e8ee66f079831546091"
+    "url": "/memo/_next/static/runtime/main-4cf7405d7e023b0845f5.js",
+    "revision": "0002c5b4f1e846760be6"
   },
   {
     "url": "/memo/_next/static/runtime/polyfills-667e20e904826e105507.js",
