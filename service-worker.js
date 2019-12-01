@@ -1,43 +1,43 @@
 self.__precacheManifest = [
   {
-    "url": "/memo/_next/static/_PzpMlvlPULLGqS5TlM4Q/pages/_app.js",
-    "revision": "7e0653c0806a770cbf5c"
-  },
-  {
-    "url": "/memo/_next/static/_PzpMlvlPULLGqS5TlM4Q/pages/_error.js",
-    "revision": "437a74adfacfd0827cf2"
-  },
-  {
-    "url": "/memo/_next/static/_PzpMlvlPULLGqS5TlM4Q/pages/about.js",
-    "revision": "ffd5a9327e07dbf45590"
-  },
-  {
-    "url": "/memo/_next/static/_PzpMlvlPULLGqS5TlM4Q/pages/index.js",
-    "revision": "9980246b78b39d0d2705"
-  },
-  {
-    "url": "/memo/_next/static/_PzpMlvlPULLGqS5TlM4Q/pages/notes.js",
-    "revision": "f8dca766c04d818601b9"
-  },
-  {
-    "url": "/memo/_next/static/_PzpMlvlPULLGqS5TlM4Q/pages/notes/[id].js",
-    "revision": "959ade87c5956baba90e"
-  },
-  {
     "url": "/memo/_next/static/chunks/commons.d98bbcd905afc63e586e.js",
     "revision": "95aa6a2ae6e929063b13"
   },
   {
-    "url": "/memo/_next/static/runtime/main-feb96505c916704aaee8.js",
-    "revision": "aad77b0a174f2eda16c4"
+    "url": "/memo/_next/static/runtime/main-cdb7a64c709920981932.js",
+    "revision": "4c2a86ab34ea1f6bded0"
   },
   {
-    "url": "/memo/_next/static/runtime/polyfills-667e20e904826e105507.js",
-    "revision": "7dea5b6e42df34769378"
+    "url": "/memo/_next/static/runtime/polyfills-25502109c8842b40df6e.js",
+    "revision": "4e0e0df1f92595986a1d"
   },
   {
     "url": "/memo/_next/static/runtime/webpack-08f7b238829422e3b9b2.js",
     "revision": "fc489b339eb65f8713fe"
+  },
+  {
+    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/_app.js",
+    "revision": "09b69d20595de8135126"
+  },
+  {
+    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/_error.js",
+    "revision": "ed12709c35626b2e2a58"
+  },
+  {
+    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/about.js",
+    "revision": "9c522b628d6221b5a8d5"
+  },
+  {
+    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/index.js",
+    "revision": "ec30ee6282a9adb27349"
+  },
+  {
+    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/notes.js",
+    "revision": "92997923bd6200e6fbe4"
+  },
+  {
+    "url": "/memo/_next/static/xkv6YQfb6VcDmCoDZYFcg/pages/notes/[id].js",
+    "revision": "555fe339b8a130b3289a"
   }
 ];
 
@@ -71,16 +71,5 @@ self.addEventListener('message', (event) => {
  * requests for URLs in the manifest.
  * See https://goo.gl/S9QRab
  */
-self.__precacheManifest = [
-  {
-    "url": "static/icon.png",
-    "revision": "72d4dcfe45c0ff2b9c37a702f9a91c54"
-  },
-  {
-    "url": "static/manifest.json",
-    "revision": "557c08a97d9357fbd58d4b1820d6649e"
-  }
-].concat(self.__precacheManifest || []);
+self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
-
-workbox.routing.registerRoute(/^https?.*/, new workbox.strategies.NetworkFirst({ "cacheName":"offlineCache", plugins: [new workbox.expiration.Plugin({ maxEntries: 200, purgeOnQuotaError: false })] }), 'GET');
