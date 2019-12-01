@@ -6,6 +6,8 @@ const nextConfig = {
     REACT_APP_FIREBASE_MESSAGING_SENDER_ID: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   },
   assetPrefix: process.env.NODE_ENV === 'production' ? '/memo' : '',
+  registerSwPrefix: process.env.NODE_ENV === 'production' ? '/memo' : '',
+  scope: process.env.NODE_ENV === 'production' ? '/memo/' : '/',
 };
 
 module.exports = withOffline(nextConfig);
