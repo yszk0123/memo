@@ -1,27 +1,27 @@
 self.__precacheManifest = [
   {
-    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/_app.js",
-    "revision": "08266b0a8a2842448e92"
+    "url": "/memo/_next/static/B1PbNzKKU95TePivSJkB5/pages/_app.js",
+    "revision": "a80e2c81896b207ef804"
   },
   {
-    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/_error.js",
-    "revision": "4db9d005e0a648c1ad23"
+    "url": "/memo/_next/static/B1PbNzKKU95TePivSJkB5/pages/_error.js",
+    "revision": "312a200929160713b938"
   },
   {
-    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/about.js",
-    "revision": "1902cacdc0d51e07265f"
+    "url": "/memo/_next/static/B1PbNzKKU95TePivSJkB5/pages/about.js",
+    "revision": "c2eca31edba1f739a2d7"
   },
   {
-    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/index.js",
-    "revision": "2fe212b3fefdb8af1d59"
+    "url": "/memo/_next/static/B1PbNzKKU95TePivSJkB5/pages/index.js",
+    "revision": "bd98efa6f3473d6ef055"
   },
   {
-    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/notes.js",
-    "revision": "710d03100a99394c5006"
+    "url": "/memo/_next/static/B1PbNzKKU95TePivSJkB5/pages/notes.js",
+    "revision": "372724cb801fe16b31ad"
   },
   {
-    "url": "/memo/_next/static/85wR9Ca2EQlaMuT8yuFTU/pages/notes/[id].js",
-    "revision": "b676a29241d729b8048d"
+    "url": "/memo/_next/static/B1PbNzKKU95TePivSJkB5/pages/notes/[id].js",
+    "revision": "e06ff7c3bc04e2a9548f"
   },
   {
     "url": "/memo/_next/static/chunks/commons.d98bbcd905afc63e586e.js",
